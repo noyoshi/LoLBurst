@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LoL Burst</title>
+    <meta charset="utf-8">
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="static/main.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+	</head>
+
+
+  <!-- <body background="{{ url_for('static', filename='temo.gif') }}"> -->
+  <!-- {% if champ %}
+  <body background="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{{ champ.name }}_0.jpg" class="bgimg">
+  {% else %} -->
+  <body>
+  <!-- {% endif %} -->
+    <div class="container">
+      <form class="col s12" action="{{ url_for('champ') }}" method="POST">
+      <div class="row">
+        <input placeholder="Search for Champion" id="autocomplete-input"
+        class="autocomplete" type="text" name="Name">
+      </div>
+    </form>
+    {% if champ and champ[0] %}
+    <h1>{{ champ[0].name }}</h1>
+    {% for ability in champ[0].abilities %}
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+        <div class="card-panel grey lighten-5 z-depth-1">
+          <div class="row valign-wrapper">
+            <div class="col s2">
+              <img src="static/{{ ability[1] }}" alt="" class="circle responsive-img">
+            </div>
+            <div class="col s10">
+              <!-- <span class="black-text"> -->
+                {{ ability[0]|safe }}
+              <!-- </span> -->
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form class="col s12" action="{{ url_for('champ') }}" method="POST">
+        <div class="row">
+          <input placeholder="Search for Item" class="autocomplete" type="text" name="Item">
+        </div>
+    </form>
+
+    {% if champ and champ[1] %}
+    <h1>{{ champ[1].name }}</h1>
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+        <div class="card-panel grey lighten-5 z-depth-1">
+          <div class="row valign-wrapper">
+            <div class="col s2">
+              <img src="static/item_icons/{{ champ[1].id }}.png" alt="" class="circle responsive-img">
+            </div>
+            <div class="col s10">
+              <!-- <span class="black-text"> -->
+                {{ champ[1]["description"]|safe }}
+              <!-- </span> -->
+            </div>
+          </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+    </div>
+  </body>
+
+	<!-- Custom JS -->
+
+</html>
