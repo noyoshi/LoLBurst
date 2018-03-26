@@ -1,7 +1,7 @@
 import json
 
 def get_item_icon():
-    f = open("item_8.6.json")
+    f = open("item.json")
     INFO = json.loads(f.read())
     output = {}
     for key, value in INFO["data"].items():
@@ -19,7 +19,7 @@ def get_item_icon():
     return output
 
 def get_item_dict():
-    f = open("item_8.6.json")
+    f = open("item.json")
     INFO = json.loads(f.read())
     output = {}
     for key, value in INFO["data"].items():
@@ -34,6 +34,6 @@ def get_champ_dict():
     INFO = json.loads(f.read())
     output = {}
     for key, value in INFO["data"].items():
-        output [ INFO["data"][key]["name"] ] = "http://ddragon.leagueoflegends.com/cdn/8.6.1/img/item/" + INFO["data"][key]["image"]["full"]
+        output [ INFO["data"][key]["name"] ] = "http://ddragon.leagueoflegends.com/cdn/8.6.1/img/champion/" + INFO["data"][key]["image"]["full"]
     with open('champ_icons.json', 'w') as f:
         json.dump(output, f)

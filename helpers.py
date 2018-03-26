@@ -39,7 +39,10 @@ def replace_vars(string, effect_list, var_list, LEVEL=1):
             type_ = string[i]
             if type_ == 'e':
                 i += 1
-                index = int(string[i])
+                try:
+                    index = int(string[i])
+                except:
+                    pass
                 # NEED TO CHANGE BASED ON ABILITY LEVEL
                 try:
                     return_str += str(effect_list[index][LEVEL])
@@ -80,7 +83,13 @@ def get_spell(champ='Katarina', SPELL=1):
     INFO = json.loads(f.read())
 
     CHAMP_DICT = INFO["data"] # Dict with champ name key
-    CHAMP_DATA = CHAMP_DICT[champ]
+    if "'" in champ:
+        champ = champ.replace("'","")
+        if champ != "RekSai" and champ != "KogMaw":
+            champ = champ[0] + champ[1:].lower()
+        CHAMP_DATA = CHAMP_DICT[champ]
+    else:
+        CHAMP_DATA = CHAMP_DICT[champ]
     SPELLS = CHAMP_DATA["spells"]
     RETURN_DICT = { 1:{}, 2: {}, 3:{}, 4:{}}
     for i, spell in enumerate(SPELLS):
@@ -113,12 +122,12 @@ def get_champ_spell(champ='Katarina', SPELL_INDEX=1, SPELL_LEVEL=3):
 
     return tooltip, get_icon(num, x, y)
 
-def download_icons():
+def download_icons(version):
     for n in range(1, 15):
-        URL = "http://ddragon.leagueoflegends.com/cdn/8.6.1/img/sprite/spell{}.png".format(n)
-        os.popen('wget {} -P spell_icons'.format(URL))
+        URL = "http://ddragon.leagueoflegends.com/cdn/{}/img/sprite/spell{}.png".format(version,n)
+        os.popen('wget -P static/spell_icons/ {}'.format(URL))
         time.sleep(2)
-        os.popen("convert -crop 10x4@ +repage +adjoin spell_icons/spell{}.png  spell_icons/spell{}_%d.png ".format(n, n))
+        os.popen("convert -crop 10x4@ +repage +adjoin static/spell_icons/spell{}.png  static/spell_icons/spell{}_%d.png ".format(n, n))
 
 def get_icon(SPELLNUM=5, x=432, y=96):
     x = int(x)

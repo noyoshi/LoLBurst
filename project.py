@@ -3,6 +3,7 @@
 from flask import Flask, render_template, url_for, jsonify, request
 import json
 import os
+import collections
 from helpers import *
 from item_helper import *
 
@@ -10,23 +11,47 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    if os.path.isfile('/home/silver/Projects/LoLSite/champ1.json'):
-        os.popen('rm /home/silver/Projects/LoLSite/champ1.json')
-    if os.path.isfile('/home/silver/Projects/LoLSite/item1.json'):
-        os.popen('rm /home/silver/Projects/LoLSite/item1.json')
-    return render_template('main.html')
+    CURR_DIR = os.getcwd()
+    if os.path.isfile(CURR_DIR + "/champ1.json"):
+        os.popen('rm {}/champ1.json'.format(CURR_DIR))
+    if os.path.isfile(CURR_DIR + "/item1.json"):
+        os.popen('rm {}/item1.json'.format(CURR_DIR))
+    return render_template('item.html')
 
 @app.route("/load_champs", methods=['POST', 'GET'])
 def load_champs():
     data = {'Apple':None, 'Derp': None}
     return jsonify(data)
 
+@app.route("/execute", methods=['POST', 'GET'])
+def execute():
+    f = open("item1.json")
+    CURR_DIR = os.getcwd()
+    champion = {}
+    if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
+        # Loads config file
+        q = open('{}/champ1.json'.format(CURR_DIR))
+        champion = json.loads(q.read())
+    INFO = json.loads(f.read())
+    for searchkey in request.form.keys():
+        #print(name)
+        if searchkey in INFO.keys():
+            del INFO[searchkey]
+        #some_dict = {key: value for key,value in INFO.items() if key is not searchkey}
+    with open('item1.json', 'w') as f:
+        json.dump(INFO, f)
+    return render_template("item.html", champ=[champion,INFO])
+
+
 @app.route("/champ", methods=['GET', 'POST'])
 def champ():
     # Name Block
+    CURR_DIR = os.getcwd()
     name = None
+    if 'Delete' in request.form.keys():
+        print("it worked")
     if 'Name' in request.form.keys():
-        name = request.form['Name'].strip().replace(" ", "").replace("'", "")
+        name = request.form['Name'].strip().replace(" ","").replace(".","")
     champion = {}
     if name:
         champion = {'name': name, 'abilities': []}
@@ -36,9 +61,9 @@ def champ():
         with open('champ1.json', 'w') as f:
             json.dump(champion, f)
     else:
-        if os.path.isfile('/home/silver/Projects/LoLSite/champ1.json'):
+        if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
             # Loads config file
-            f = open('/home/silver/Projects/LoLSite/champ1.json')
+            f = open('{}/champ1.json'.format(CURR_DIR))
             champion = json.loads(f.read())
 
     # Item Block
@@ -47,21 +72,32 @@ def champ():
         item = request.form['Item'].strip()
     tempItemDict = get_item_icon()
     itemDict = {}
+    itemdata = {}
     if item:
         gold = tempItemDict[item]['gold']['total']
         _id = tempItemDict[item]['id']
         description = tempItemDict[item]["description"].replace("<stats>", "<stats style='color: #86D287'>")
         stats = tempItemDict[item]["stats"]
         itemDict = {'name': item, 'id': _id, 'gold': gold, 'description': description, 'stats': stats}
-        with open('item1.json', 'w') as f:
-            json.dump(itemDict, f)
-    else:
-        if os.path.isfile('/home/silver/Projects/LoLSite/item1.json'):
-            # Loads config file
-            f = open('/home/silver/Projects/LoLSite/item1.json')
-            itemDict = json.loads(f.read())
+        if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
+            with open('item1.json') as f:
+                itemdata = json.load(f)
+            if len(itemdata) < 6:
+                itemdata.update({item: itemDict})
+                with open('item1.json', 'w') as f:
+                    json.dump(itemdata, f)
+        else:
+            itemdata = {item: itemDict}
+            with open('item1.json', 'w') as f:
+                json.dump(itemdata, f)
 
-    return render_template('main.html', champ=[champion, itemDict])
+    else:
+        if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
+            # Loads config file
+            f = open('{}/item1.json'.format(CURR_DIR))
+            itemdata = json.loads(f.read())
+    itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
+    return render_template('item.html', champ=[champion, itemdatanew])
 
 
 if __name__ == '__main__':

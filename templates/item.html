@@ -1,1 +1,99 @@
+<html>
+<head>
+    <title>LoL Burst</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
+<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<!-- Compiled and minified CSS -->
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script type="text/javascript" src="../static/js/autocomplete.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <form autocomplete="off" class="col s12" action="{{ url_for('champ') }}" method="POST">
+                <div class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">textsms</i>
+                            <input type="text" id="autocomplete-input-champ" class="autocomplete" name='Name'>
+                            <label for="autocomplete-input-champ">Search for Champion</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% if champ and champ[0] %}
+            <h1>{{ champ[0].name }}</h1>
+            {% for ability in champ[0].abilities %}
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
+                <div class="card-panel grey lighten-5 z-depth-1">
+                    <div class="row valign-wrapper">
+                        <div class="col s2">
+                            <img src="static/{{ ability[1] }}" alt="" class="circle responsive-img">
+                        </div>
+                        <div class="col s10">
+                            <!-- <span class="black-text"> -->
+                            {{ ability[0]|safe }}
+                            <!-- </span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="row">
+
+            <form autocomplete="off" class="col s12" action="{{ url_for('champ') }}" method="POST">
+                <div class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">textsms</i>
+                            <input type="text" id="autocomplete-input-item" class="autocomplete" name='Item'>
+                            <label for="autocomplete-input-item">Search for Item</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if champ and champ[1] %}
+        {% for key, value in champ[1].items() %}
+        <div class="row">
+            <h1>{{ key }}</h1>
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
+                <div class="card-panel grey lighten-5 z-depth-1">
+                    <div class="row valign-wrapper">
+                        <div class="col s2">
+                            <img src="static/item_icons/{{ champ[1][key].id }}.png" alt="" class="circle responsive-img">
+                        </div>
+                        <div class="col s10">
+                            <!-- <span class="black-text"> -->
+                            {{ champ[1][key]["description"]|safe }}
+                            <!-- </span> -->
+                        </div>
+                    </div>
+                </div>
+                <div class= "delete-item">
+                    <form method='POST' action="{{ url_for('execute') }}">
+                        <button name="{{ key }}" class="btn waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</button>
+                    <!--<a href="/exec" class="waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</a> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+<script type="text/javascript" src="{{ url_for('static',filename='js/autocomplete.js') }}"></script>
+
+</html>
