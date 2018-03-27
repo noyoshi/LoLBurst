@@ -1,7 +1,15 @@
 document.write('\
 <ul id="dropdown1" class="dropdown-content">\
-  <li><a href="/champ">Champion 1</a></li>\
-  <li><a href="/champ">Champion 2</a></li>\
+  <form method="POST" action="{{ url_for("champ/edit/1") }}"> \
+    <div name="Champ1">\
+    <li name="Champ1"><a href="/edit/1" name="Champ1">Champion 1</a></li>\
+    </div>\
+    <form>\
+    <form method="POST" action="{{ url_for("champ/edit/2") }}"> \
+    <div name="Champ2">\
+    <li name="Champ2"><a href="/edit/2" name="Champ2">Champion 2</a></li>\
+    </div>\
+  </form>\
 </ul>\
 <nav>\
   <div class="nav-wrapper">\

@@ -25,7 +25,11 @@
 <body>
     <div class="container">
         <div class="row">
-            <form autocomplete="off" class="col s12" action="{{ url_for('champ') }}" method="POST">
+            {% if champ and champ[2] == '2' %}
+            <form autocomplete="off" class="col s12" action="{{ url_for('edit', num=2) }}" method="POST">
+            {% else %}
+            <form autocomplete="off" class="col s12" action="{{ url_for('edit', num=1) }}" method="POST">
+            {% endif %}
                 <div class="col s12">
                     <div class="row">
                         <div class="input-field col s12">
@@ -38,16 +42,16 @@
             </form>
         </div>
             {% if champ and champ[0] %}
-            {% for key,value in champ[0].items() %}
+
                 <div class="row">
-                <h1>{{ key }}</h1>
+                <h1>{{ champ[0].id }}</h1>
                 <div class="col s12 m8 offset-m2 l6 offset-l3">
-                {% for ability in champ[0][key].abilities %}
+                {% for ability in champ[0].abilities %}
 
                     <div class="card-panel grey lighten-5 z-depth-1">
                         <div class="row valign-wrapper">
                             <div class="col s2">
-                                <img src="static/{{ ability[1] }}" alt="" class="circle responsive-img">
+                                <img src="/static/{{ ability[1] }}" alt="" class="circle responsive-img">
                             </div>
                             <div class="col s10">
                                 <!-- <span class="black-text"> -->
@@ -57,20 +61,17 @@
                         </div>
                     </div>
                 {% endfor %}
-                <div class= "delete-champ">
-                    <form method='POST' action="{{ url_for('delete_champ') }}">
-                        <button name="{{ key }}" class="btn waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</button>
-                    <!--<a href="/exec" class="waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</a> -->
-                    </form>
-                </div>
                 </div>
             </div>
-            {% endfor %}
+
             {% endif %}
 
         <div class="row">
-
-            <form autocomplete="off" class="col s12" action="{{ url_for('champ') }}" method="POST">
+            {% if champ and champ[2] == '2' %}
+            <form autocomplete="off" class="col s12" action="{{ url_for('edit', num=2) }}" method="POST">
+            {% else %}
+            <form autocomplete="off" class="col s12" action="{{ url_for('edit', num=1) }}" method="POST">
+            {% endif %}
                 <div class="col s12">
                     <div class="row">
                         <div class="input-field col s12">
@@ -90,7 +91,7 @@
                 <div class="card-panel grey lighten-5 z-depth-1">
                     <div class="row valign-wrapper">
                         <div class="col s2">
-                            <img src="static/item_icons/{{ champ[1][key].id }}.png" alt="" class="circle responsive-img">
+                            <img src="/static/item_icons/{{ champ[1][key].id }}.png" alt="" class="circle responsive-img">
                         </div>
                         <div class="col s10">
                             <!-- <span class="black-text"> -->
@@ -100,7 +101,11 @@
                     </div>
                 </div>
                 <div class= "delete-item">
-                    <form method='POST' action="{{ url_for('execute') }}">
+                    {% if champ and champ[2] == '2' %}
+                    <form method='POST' action="{{ url_for('delete', num=2) }}">
+                    {% else %}
+                    <form method='POST' action="{{ url_for('delete', num=1) }}">
+                    {% endif %}
                         <button name="{{ key }}" class="btn waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</button>
                     <!--<a href="/exec" class="waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</a> -->
                     </form>
