@@ -44,25 +44,6 @@ def delete(num):
     return render_template("item.html", champ=[champion,INFO, num])
 
 
-
-
-# @app.route("/delete_champ", methods=['POST', 'GET'])
-# def delete_champ():
-#     f = open("champ1.json")
-#     CURR_DIR = os.getcwd()
-#     item = {}
-#     if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
-#         # Loads config file
-#         q = open('{}/item1.json'.format(CURR_DIR))
-#         item = json.loads(q.read())
-#     INFO = json.loads(f.read())
-#     for searchkey in request.form.keys():
-#         if searchkey in INFO.keys():
-#             del INFO[searchkey]
-#     with open('champ1.json', 'w') as f:
-#         json.dump(INFO, f)
-#     return render_template("item.html", champ=[INFO, item])
-
 @app.route("/stats", methods=['GET', 'POST'])
 def stats():
     return render_template("stats.html")
@@ -129,7 +110,8 @@ def edit(num):
     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
     return render_template('item.html', champ=[champion, itemdatanew, num])
 
-
+if __name__ == '__main__':
+    app.run()
 
 
 
@@ -216,5 +198,20 @@ def edit(num):
 #     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
 #     return render_template('item.html', champ=[champion, itemdatanew])
 
-if __name__ == '__main__':
-    app.run()
+
+# @app.route("/delete_champ", methods=['POST', 'GET'])
+# def delete_champ():
+#     f = open("champ1.json")
+#     CURR_DIR = os.getcwd()
+#     item = {}
+#     if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
+#         # Loads config file
+#         q = open('{}/item1.json'.format(CURR_DIR))
+#         item = json.loads(q.read())
+#     INFO = json.loads(f.read())
+#     for searchkey in request.form.keys():
+#         if searchkey in INFO.keys():
+#             del INFO[searchkey]
+#     with open('champ1.json', 'w') as f:
+#         json.dump(INFO, f)
+#     return render_template("item.html", champ=[INFO, item])
