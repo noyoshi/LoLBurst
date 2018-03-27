@@ -43,6 +43,9 @@ def delete(num):
         json.dump(INFO, f)
     return render_template("item.html", champ=[champion,INFO, num])
 
+
+
+
 # @app.route("/delete_champ", methods=['POST', 'GET'])
 # def delete_champ():
 #     f = open("champ1.json")
@@ -137,81 +140,81 @@ def edit(num):
 
 
 
-@app.route(("/champ"), methods=['GET', 'POST'])
-def champ():
-    # Name Block
-    #print(request.path)
-    CURR_DIR = os.getcwd()
-    name = None
-    if 'Name' in request.form.keys():
-        originalname = request.form['Name'].strip()
-        name = originalname.replace(" ","").replace(".","")
-    champion = {}
-
-    if name:
-        champion = {'name': name, 'abilities': [], 'id': originalname}
-        for index in range(1, 5):
-            text, icon = get_champ_spell(name, index)
-            champion['abilities'].append([text, icon])
-
-        with open('champ1.json', 'w') as s:
-            json.dump(champion,s)
-
-
-        # if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
-        #     with open('champ1.json') as q:
-        #         champdata = json.load(q)
-        #     if len(champdata) < 2:
-        #         champdata.update({originalname: champion})
-        #         with open('champ1.json', 'w') as r:
-        #             json.dump(champdata, r)
-        # else:
-        #     champdata = {originalname: champion}
-        #     with open('champ1.json', 'w') as s:
-        #         json.dump(champdata, s)
-
-
-
-        #with open('champ1.json', 'w') as f:
-        #    json.dump(champion, f)
-    else:
-        if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
-            # Loads config file
-            f = open('{}/champ1.json'.format(CURR_DIR))
-            champion = json.loads(f.read())
-
-    # Item Block
-    item = None
-    if 'Item' in request.form.keys():
-        item = request.form['Item'].strip()
-    tempItemDict = get_item_icon()
-    itemDict = {}
-    itemdata = {}
-    if item:
-        gold = tempItemDict[item]['gold']['total']
-        _id = tempItemDict[item]['id']
-        description = tempItemDict[item]["description"].replace("<stats>", "<stats style='color: #86D287'>")
-        stats = tempItemDict[item]["stats"]
-        itemDict = {'name': item, 'id': _id, 'gold': gold, 'description': description, 'stats': stats}
-        if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
-            with open('item1.json') as f:
-                itemdata = json.load(f)
-            if len(itemdata) < 6:
-                itemdata.update({item: itemDict})
-                with open('item1.json', 'w') as f:
-                    json.dump(itemdata, f)
-        else:
-            itemdata = {item: itemDict}
-            with open('item1.json', 'w') as f:
-                json.dump(itemdata, f)
-
-    else:
-        if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
-            # Loads config file
-            f = open('{}/item1.json'.format(CURR_DIR))
-            itemdata = json.loads(f.read())
-    itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
-    return render_template('item.html', champ=[champion, itemdatanew])
+# @app.route(("/champ"), methods=['GET', 'POST'])
+# def champ():
+#     # Name Block
+#     #print(request.path)
+#     CURR_DIR = os.getcwd()
+#     name = None
+#     if 'Name' in request.form.keys():
+#         originalname = request.form['Name'].strip()
+#         name = originalname.replace(" ","").replace(".","")
+#     champion = {}
+#
+#     if name:
+#         champion = {'name': name, 'abilities': [], 'id': originalname}
+#         for index in range(1, 5):
+#             text, icon = get_champ_spell(name, index)
+#             champion['abilities'].append([text, icon])
+#
+#         with open('champ1.json', 'w') as s:
+#             json.dump(champion,s)
+#
+#
+#         # if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
+#         #     with open('champ1.json') as q:
+#         #         champdata = json.load(q)
+#         #     if len(champdata) < 2:
+#         #         champdata.update({originalname: champion})
+#         #         with open('champ1.json', 'w') as r:
+#         #             json.dump(champdata, r)
+#         # else:
+#         #     champdata = {originalname: champion}
+#         #     with open('champ1.json', 'w') as s:
+#         #         json.dump(champdata, s)
+#
+#
+#
+#         #with open('champ1.json', 'w') as f:
+#         #    json.dump(champion, f)
+#     else:
+#         if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
+#             # Loads config file
+#             f = open('{}/champ1.json'.format(CURR_DIR))
+#             champion = json.loads(f.read())
+#
+#     # Item Block
+#     item = None
+#     if 'Item' in request.form.keys():
+#         item = request.form['Item'].strip()
+#     tempItemDict = get_item_icon()
+#     itemDict = {}
+#     itemdata = {}
+#     if item:
+#         gold = tempItemDict[item]['gold']['total']
+#         _id = tempItemDict[item]['id']
+#         description = tempItemDict[item]["description"].replace("<stats>", "<stats style='color: #86D287'>")
+#         stats = tempItemDict[item]["stats"]
+#         itemDict = {'name': item, 'id': _id, 'gold': gold, 'description': description, 'stats': stats}
+#         if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
+#             with open('item1.json') as f:
+#                 itemdata = json.load(f)
+#             if len(itemdata) < 6:
+#                 itemdata.update({item: itemDict})
+#                 with open('item1.json', 'w') as f:
+#                     json.dump(itemdata, f)
+#         else:
+#             itemdata = {item: itemDict}
+#             with open('item1.json', 'w') as f:
+#                 json.dump(itemdata, f)
+#
+#     else:
+#         if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
+#             # Loads config file
+#             f = open('{}/item1.json'.format(CURR_DIR))
+#             itemdata = json.loads(f.read())
+#     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
+#     return render_template('item.html', champ=[champion, itemdatanew])
 
 if __name__ == '__main__':
     app.run()
