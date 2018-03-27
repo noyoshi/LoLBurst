@@ -51,10 +51,11 @@ def champ():
     if 'Delete' in request.form.keys():
         print("it worked")
     if 'Name' in request.form.keys():
-        name = request.form['Name'].strip().replace(" ","").replace(".","")
+        originalname = request.form['Name'].strip()
+        name = originalname.replace(" ","").replace(".","")
     champion = {}
     if name:
-        champion = {'name': name, 'abilities': []}
+        champion = {'name': name, 'abilities': [], 'id': originalname}
         for index in range(1, 5):
             text, icon = get_champ_spell(name, index)
             champion['abilities'].append([text, icon])
