@@ -16,8 +16,13 @@ $(document).ready(function(){
         minLength: 1
     });
 });
-
 */
+
+$(document).ready(function(){
+    $(".dropdown-trigger").dropdown();
+});
+
+
 
 $(document).ready(function(){
     $('#autocomplete-input-champ').autocomplete({

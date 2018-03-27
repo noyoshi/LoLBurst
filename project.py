@@ -42,30 +42,71 @@ def execute():
         json.dump(INFO, f)
     return render_template("item.html", champ=[champion,INFO])
 
+@app.route("/delete_champ", methods=['POST', 'GET'])
+def delete_champ():
+    f = open("champ1.json")
+    CURR_DIR = os.getcwd()
+    item = {}
+    if os.path.isfile('{}/item1.json'.format(CURR_DIR)):
+        # Loads config file
+        q = open('{}/item1.json'.format(CURR_DIR))
+        item = json.loads(q.read())
+    INFO = json.loads(f.read())
+    for searchkey in request.form.keys():
+        if searchkey in INFO.keys():
+            del INFO[searchkey]
+    with open('champ1.json', 'w') as f:
+        json.dump(INFO, f)
+    return render_template("item.html", champ=[INFO, item])
 
+@app.route("/stats", methods=['GET', 'POST'])
+def stats():
+    return render_template("stats.html")
+
+@app.route("/info", methods=['GET', 'POST'])
+def info():
+    return render_template("info.html")
+    
 @app.route("/champ", methods=['GET', 'POST'])
 def champ():
     # Name Block
     CURR_DIR = os.getcwd()
     name = None
-    if 'Delete' in request.form.keys():
-        print("it worked")
     if 'Name' in request.form.keys():
         originalname = request.form['Name'].strip()
         name = originalname.replace(" ","").replace(".","")
     champion = {}
+    champdata = {}
     if name:
         champion = {'name': name, 'abilities': [], 'id': originalname}
         for index in range(1, 5):
             text, icon = get_champ_spell(name, index)
             champion['abilities'].append([text, icon])
-        with open('champ1.json', 'w') as f:
-            json.dump(champion, f)
+
+
+
+
+        if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
+            with open('champ1.json') as q:
+                champdata = json.load(q)
+            if len(champdata) < 2:
+                champdata.update({originalname: champion})
+                with open('champ1.json', 'w') as r:
+                    json.dump(champdata, r)
+        else:
+            champdata = {originalname: champion}
+            with open('champ1.json', 'w') as s:
+                json.dump(champdata, s)
+
+
+
+        #with open('champ1.json', 'w') as f:
+        #    json.dump(champion, f)
     else:
         if os.path.isfile('{}/champ1.json'.format(CURR_DIR)):
             # Loads config file
             f = open('{}/champ1.json'.format(CURR_DIR))
-            champion = json.loads(f.read())
+            champdata = json.loads(f.read())
 
     # Item Block
     item = None
@@ -98,8 +139,7 @@ def champ():
             f = open('{}/item1.json'.format(CURR_DIR))
             itemdata = json.loads(f.read())
     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
-    return render_template('item.html', champ=[champion, itemdatanew])
-
+    return render_template('item.html', champ=[champdata, itemdatanew])
 
 if __name__ == '__main__':
     app.run()

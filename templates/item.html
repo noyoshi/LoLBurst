@@ -3,6 +3,7 @@
     <title>LoL Burst</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
+
 <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 
@@ -13,8 +14,13 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script type="text/javascript" src="../static/js/autocomplete.js"></script>
+    <!-- <script type="text/javascript" src="../static/js/autocomplete.js"></script>-->
+
 </head>
+
+
+<script type="text/javascript" src="{{ url_for('static',filename='js/loading.js') }}"></script>
+
 
 <body>
     <div class="container">
@@ -30,26 +36,38 @@
                     </div>
                 </div>
             </form>
+        </div>
             {% if champ and champ[0] %}
-            <h1>{{ champ[0].id }}</h1>
-            {% for ability in champ[0].abilities %}
-            <div class="col s12 m8 offset-m2 l6 offset-l3">
-                <div class="card-panel grey lighten-5 z-depth-1">
-                    <div class="row valign-wrapper">
-                        <div class="col s2">
-                            <img src="static/{{ ability[1] }}" alt="" class="circle responsive-img">
-                        </div>
-                        <div class="col s10">
-                            <!-- <span class="black-text"> -->
-                            {{ ability[0]|safe }}
-                            <!-- </span> -->
+            {% for key,value in champ[0].items() %}
+                <div class="row">
+                <h1>{{ key }}</h1>
+                <div class="col s12 m8 offset-m2 l6 offset-l3">
+                {% for ability in champ[0][key].abilities %}
+
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="row valign-wrapper">
+                            <div class="col s2">
+                                <img src="static/{{ ability[1] }}" alt="" class="circle responsive-img">
+                            </div>
+                            <div class="col s10">
+                                <!-- <span class="black-text"> -->
+                                {{ ability[0]|safe }}
+                                <!-- </span> -->
+                            </div>
                         </div>
                     </div>
+                {% endfor %}
+                <div class= "delete-champ">
+                    <form method='POST' action="{{ url_for('delete_champ') }}">
+                        <button name="{{ key }}" class="btn waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</button>
+                    <!--<a href="/exec" class="waves-effect waves-light btn-large red"><i class="material-icons left">delete</i>Delete Item</a> -->
+                    </form>
+                </div>
                 </div>
             </div>
             {% endfor %}
             {% endif %}
-        </div>
+
         <div class="row">
 
             <form autocomplete="off" class="col s12" action="{{ url_for('champ') }}" method="POST">
@@ -95,5 +113,7 @@
 </body>
 
 <script type="text/javascript" src="{{ url_for('static',filename='js/autocomplete.js') }}"></script>
+
+
 
 </html>
