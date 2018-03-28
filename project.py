@@ -64,7 +64,7 @@ def edit(num):
     itemfile = "item" + num + ".json"
     if name:
         champion = {'name': name, 'abilities': [], 'id': originalname}
-        for index in range(1, 5):
+        for index in range(0, 5):
             text, icon = get_champ_spell(name, index)
             champion['abilities'].append([text, icon])
 

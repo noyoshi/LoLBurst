@@ -8,6 +8,8 @@ import sys
 import os
 import time
 
+version = "8.6.1"
+
 def open_json(PATH='champ_info.json'):
     f = open(PATH)
     return f
@@ -91,7 +93,12 @@ def get_spell(champ='Katarina', SPELL=1):
     else:
         CHAMP_DATA = CHAMP_DICT[champ]
     SPELLS = CHAMP_DATA["spells"]
-    RETURN_DICT = { 1:{}, 2: {}, 3:{}, 4:{}}
+    PASSIVE = CHAMP_DATA["passive"]
+    PASSIVEINFO = {}
+    PASSIVEINFO["name"] = PASSIVE["name"]
+    PASSIVEINFO["tooltip"] = PASSIVE["description"]
+    PASSIVEINFO["image"] = PASSIVE["image"]["full"]
+    RETURN_DICT = { 0: PASSIVEINFO, 1:{}, 2: {}, 3:{}, 4:{}}
     for i, spell in enumerate(SPELLS):
         RETURN_DICT[i+1]["name"] = spell["name"]
         # effects in order of when they are mentioned in the tooltip
@@ -101,26 +108,42 @@ def get_spell(champ='Katarina', SPELL=1):
             RETURN_DICT[i+1]["vars"] = spell["vars"]
         else:
             RETURN_DICT[i+1]["vars"] = None
-        img_d = spell["image"]
-        RETURN_DICT[i+1]["location"] = [img_d["sprite"].replace("spell", "").replace(".png", ""), img_d["x"], img_d["y"]]
+        #img_d = spell["image"]
+        #RETURN_DICT[i+1]["location"] = [img_d["sprite"].replace("spell", "").replace(".png", ""), img_d["x"], img_d["y"]]
+        RETURN_DICT[i+1]["image"] = spell["image"]["full"]
 
 
 
     return RETURN_DICT[SPELL]
 
 
-
 def get_champ_spell(champ='Katarina', SPELL_INDEX=1, SPELL_LEVEL=3):
     spell = get_spell(champ, SPELL_INDEX)
-    tooltip = replace_vars(spell["tooltip"], spell["effects"], spell["vars"], SPELL_LEVEL)
-    tooltip = tooltip.replace("spelldamage", "Ability Power").replace("bonusattackdamage", "Bonus Attack Damage").replace("attackdamage", "Base Attack Damage")
+    if SPELL_INDEX >= 1:
+        tooltip = replace_vars(spell["tooltip"], spell["effects"], spell["vars"], SPELL_LEVEL)
+        tooltip = tooltip.replace("spelldamage", "Ability Power").replace("bonusattackdamage", "Bonus Attack Damage").replace("attackdamage", "Base Attack Damage")
 
-    loc = spell["location"]
-    x = loc[1]
-    y = loc[2]
-    num = loc[0]
+        #loc = spell["location"]
+        #x = loc[1]
+        #y = loc[2]
+        #num = loc[0]
+        return tooltip, "http://ddragon.leagueoflegends.com/cdn/{}/img/spell/{}".format(version, spell["image"])
+    else:
+        return spell["tooltip"], "http://ddragon.leagueoflegends.com/cdn/{}/img/passive/{}".format(version, spell["image"])
 
-    return tooltip, get_icon(num, x, y)
+# def get_champ_spell(champ='Katarina', SPELL_INDEX=1, SPELL_LEVEL=3):
+#     spell = get_spell(champ, SPELL_INDEX)
+#     if SPELL_INDEX >= 1:
+#         tooltip = replace_vars(spell["tooltip"], spell["effects"], spell["vars"], SPELL_LEVEL)
+#         tooltip = tooltip.replace("spelldamage", "Ability Power").replace("bonusattackdamage", "Bonus Attack Damage").replace("attackdamage", "Base Attack Damage")
+#
+#         loc = spell["location"]
+#         x = loc[1]
+#         y = loc[2]
+#         num = loc[0]
+#         return tooltip, get_icon(num, x, y)
+#     else:
+#         return spell["tooltip"], "http://ddragon.leagueoflegends.com/cdn/8.6.1/img/passive/{}".format(spell["image"])
 
 def download_icons(version):
     for n in range(1, 15):
