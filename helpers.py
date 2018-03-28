@@ -114,22 +114,32 @@ def get_spell(champ='Katarina', SPELL=1):
 
 
 
-    return RETURN_DICT[SPELL]
+    return RETURN_DICT[SPELL], CHAMP_DICT
 
 
 def get_champ_spell(champ='Katarina', SPELL_INDEX=1, SPELL_LEVEL=3):
-    spell = get_spell(champ, SPELL_INDEX)
+    spell, CHAMP_DICT = get_spell(champ, SPELL_INDEX)
+    CURR_DIR = os.getcwd()
     if SPELL_INDEX >= 1:
         tooltip = replace_vars(spell["tooltip"], spell["effects"], spell["vars"], SPELL_LEVEL)
         tooltip = tooltip.replace("spelldamage", "Ability Power").replace("bonusattackdamage", "Bonus Attack Damage").replace("attackdamage", "Base Attack Damage")
 
-        loc = spell["location"]
-        x = loc[1]
-        y = loc[2]
-        num = loc[0]
-        return tooltip, get_icon(num, x, y)
+        # loc = spell["location"]
+        # x = loc[1]
+        # y = loc[2]
+        # num = loc[0]
+        #temp = {1: "Q", 2: "W", 3: "E", 4: "R"}
+        # q = open('champ_info.json')
+        path = CHAMP_DICT[champ]["spells"][SPELL_INDEX-1]["image"]["full"]
+        if not os.path.isfile(CURR_DIR + "/static/spell_icons/" + path):
+            os.popen("wget -P {} https://ddragon.leagueoflegends.com/cdn/{}/img/spell/{}".format("static/spell_icons/", version, path))
+            time.sleep(0.3)
+        return tooltip, "spell_icons/" + path
+        #return tooltip, get_icon(num, x, y)
     else:
-        return spell["tooltip"], "http://ddragon.leagueoflegends.com/cdn/{}/img/passive/{}".format(version, spell["image"])
+        if not os.path.isfile(CURR_DIR + "/static/spell_icons/" + spell["image"]):
+            os.popen("wget -P {} https://ddragon.leagueoflegends.com/cdn/{}/img/passive/{}".format("static/spell_icons/", version, spell["image"]))
+        return spell["tooltip"], "spell_icons/" + spell["image"]
 
 # def get_champ_spell(champ='Katarina', SPELL_INDEX=1, SPELL_LEVEL=3):
 #     spell = get_spell(champ, SPELL_INDEX)
