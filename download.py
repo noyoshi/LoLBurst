@@ -25,6 +25,7 @@ for champ in champ_list["data"].keys():
     if not os.path.isfile(CURR_DIR + "/static/champ_icons/" + champ + ".png"):
         os.popen("wget -P {} https://ddragon.leagueoflegends.com/cdn/{}/img/champion/{}.png".format("static/champ_icons/", version, champ))
 
+
 item_list = open("item.json")
 item_list = json.loads(item_list.read())
 

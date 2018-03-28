@@ -108,9 +108,9 @@ def get_spell(champ='Katarina', SPELL=1):
             RETURN_DICT[i+1]["vars"] = spell["vars"]
         else:
             RETURN_DICT[i+1]["vars"] = None
-        #img_d = spell["image"]
-        #RETURN_DICT[i+1]["location"] = [img_d["sprite"].replace("spell", "").replace(".png", ""), img_d["x"], img_d["y"]]
-        RETURN_DICT[i+1]["image"] = spell["image"]["full"]
+        img_d = spell["image"]
+        RETURN_DICT[i+1]["location"] = [img_d["sprite"].replace("spell", "").replace(".png", ""), img_d["x"], img_d["y"]]
+        #RETURN_DICT[i+1]["image"] = spell["image"]["full"]
 
 
 
@@ -123,11 +123,11 @@ def get_champ_spell(champ='Katarina', SPELL_INDEX=1, SPELL_LEVEL=3):
         tooltip = replace_vars(spell["tooltip"], spell["effects"], spell["vars"], SPELL_LEVEL)
         tooltip = tooltip.replace("spelldamage", "Ability Power").replace("bonusattackdamage", "Bonus Attack Damage").replace("attackdamage", "Base Attack Damage")
 
-        #loc = spell["location"]
-        #x = loc[1]
-        #y = loc[2]
-        #num = loc[0]
-        return tooltip, "http://ddragon.leagueoflegends.com/cdn/{}/img/spell/{}".format(version, spell["image"])
+        loc = spell["location"]
+        x = loc[1]
+        y = loc[2]
+        num = loc[0]
+        return tooltip, get_icon(num, x, y)
     else:
         return spell["tooltip"], "http://ddragon.leagueoflegends.com/cdn/{}/img/passive/{}".format(version, spell["image"])
 
@@ -151,6 +151,7 @@ def download_icons(version):
         os.popen('wget -P static/spell_icons/ {}'.format(URL))
         time.sleep(2)
         os.popen("convert -crop 10x4@ +repage +adjoin static/spell_icons/spell{}.png  static/spell_icons/spell{}_%d.png ".format(n, n))
+
 
 def get_icon(SPELLNUM=5, x=432, y=96):
     x = int(x)
