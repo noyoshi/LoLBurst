@@ -42,39 +42,47 @@ def stat_calc(level):
             if key.endswith("perlevel") and not key.startswith("attackspeed"):
                 temp = key[0:-8]
                 champ_stats1[temp] = champ_stats1[temp] + (champ_stats1[key] * (level-1))
-        champ_stats1["attackspeed"] = (0.625/(1+champ_stats1["attackspeedoffset"])) * (1 + (champ_stats1["attackspeedperlevel"]*(level-1) ))
+        champ_stats1["attackspeed"] = (0.625/(1+champ_stats1["attackspeedoffset"])) * (1 + (champ_stats1["attackspeedperlevel"]*(level-1)/100 ))
     if champ_stats2:
         for key in champ_stats2.keys():
             if key.endswith("perlevel") and not key.startswith("attackspeed"):
                 temp = key[0:-8]
                 champ_stats2[temp] = champ_stats2[temp] + (champ_stats2[key] * (level-1))
-        champ_stats2["attackspeed"] = (0.625/(1+champ_stats2["attackspeedoffset"])) * (1 + (champ_stats2["attackspeedperlevel"]*(level-1) ))
+        champ_stats2["attackspeed"] = (0.625/(1+champ_stats2["attackspeedoffset"])) * (1 + (champ_stats2["attackspeedperlevel"]*(level-1)/100 ))
     if item_stats1 and champ_stats1:
         for key in item_stats1.keys():
             temp = key.lower()
             temp = temp[0:-3]
-            print(temp)
+            #if temp.endswith("pool"):
+        #        temp = temp[:-4]
+            temp = temp.replace("movementspeed","movespeed").replace("pool","").replace("critchance","crit")
+
             if temp.startswith("flat"):
-                champ_stats1[ temp[4:] ] += item_stats1[key]
+                champ_stats1[ temp[4:] ] = champ_stats1.get(temp[4:],0) + item_stats1[key]
             elif temp.startswith("percent"):
                 stat = temp[7:]
                 if stat != "attackspeed":
                     champ_stats1[stat] = champ_stats1[stat]*(1+item_stats1[key])
                 else:
-                    champ_stats1["attackspeed"] = (0.625/(1+champ_stats1["attackspeedoffset"])) * (1 + (champ_stats1["attackspeedperlevel"]*(level-1) ) + item_stats1[key])
-    if item_stats2 and champ_stats2:
-        for key in item_stats2.keys():
-            temp = key.lower()
-            temp = temp[0:-3]
-            print(temp)
-            if temp.startswith("flat"):
-                champ_stats2[ temp[4:] ] += item_stats2[key]
-            elif temp.startswith("percent"):
-                stat = temp[7:]
-                if stat != "attackspeed":
-                    champ_stats2[stat] = champ_stats2[stat]*(1+item_stats2[key])
-                else:
-                    champ_stats2["attackspeed"] = (0.625/(1+champ_stats2["attackspeedoffset"])) * (1 + (champ_stats2["attackspeedperlevel"]*(level-1) ) + item_stats2[key])
+                    champ_stats1["attackspeed"] = (0.625/(1+champ_stats1["attackspeedoffset"])) * (1 + ((champ_stats1["attackspeedperlevel"]*(level-1) ) + item_stats1[key])/100)
+        for key in champ_stats1.keys():
+            champ_stats1[key] = round(champ_stats1[key],3)
+    # if item_stats2 and champ_stats2:
+    #     for key in item_stats2.keys():
+    #         temp = key.lower()
+    #         temp = temp[0:-3]
+    #         if temp.endswith("pool"):
+    #             temp = temp [:-4]
+    #         if "movementspeed" in temp:
+    #             temp = temp.replace("movemenetspeed", "movespeed")
+    #         if temp.startswith("flat"):
+    #             champ_stats2[ temp[4:] ] += item_stats2[key]
+    #         elif temp.startswith("percent"):
+    #             stat = temp[7:]
+    #             if stat != "attackspeed":
+    #                 champ_stats2[stat] = champ_stats2[stat]*(1+item_stats2[key])
+    #             else:
+    #                 champ_stats2["attackspeed"] = (0.625/(1+champ_stats2["attackspeedoffset"])) * (1 + (champ_stats2["attackspeedperlevel"]*(level-1) ) + item_stats2[key])
     print(champ_stats1)
     return champ_stats1, champ_stats2
 
