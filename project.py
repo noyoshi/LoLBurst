@@ -6,6 +6,7 @@ import os
 import collections
 from helpers import *
 from item_helper import *
+from stat_parse import *
 
 app = Flask(__name__)
 
@@ -46,7 +47,8 @@ def delete(num):
 
 @app.route("/stats", methods=['GET', 'POST'])
 def stats():
-    return render_template("stats.html")
+    champion1_stats, champion2_stats = stat_calc(18)
+    return render_template("stats.html", stats=[champion1_stats, champion2_stats])
 
 @app.route("/info", methods=['GET', 'POST'])
 def info():
@@ -65,7 +67,8 @@ def edit(num):
     champfile = "champ" + num + ".json"
     itemfile = "item" + num + ".json"
     if name:
-        champion = {'name': name, 'abilities': [], 'id': originalname}
+        stats = get_champ_stats(name)
+        champion = {'name': name, 'stats': stats, 'abilities': [], 'id': originalname}
         for index in range(0, 5):
             text, icon = get_champ_spell(name, index)
             champion['abilities'].append([text, icon])

@@ -175,6 +175,11 @@ def get_icon(SPELLNUM=5, x=432, y=96):
     #     download_icons(SPELLNUM)
     return ICON
 
+def get_champ_stats(name):
+    FILE = open_json()
+    FILE_NEW = json.loads(FILE.read())
+    return FILE_NEW["data"][name]["stats"]
+
 if __name__ == '__main__':
     download_icons()
     l = "QWER"
