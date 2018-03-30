@@ -55,7 +55,7 @@ def stat_calc(level):
             temp = temp[0:-3]
             #if temp.endswith("pool"):
         #        temp = temp[:-4]
-            temp = temp.replace("movementspeed","movespeed").replace("pool","").replace("critchance","crit")
+            temp = temp.replace("movementspeed","movespeed").replace("pool","").replace("critchance","crit").replace("physicaldamage","attackdamage")
 
             if temp.startswith("flat"):
                 champ_stats1[ temp[4:] ] = champ_stats1.get(temp[4:],0) + item_stats1[key]

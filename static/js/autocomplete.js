@@ -27,6 +27,9 @@ $(document).ready(function(){
     $(".dropdown-trigger").dropdown();
 });
 
+$(document).ready(function(){
+    $('.scrollspy').scrollSpy();
+  });
 
 
 $(document).ready(function(){
