@@ -4,14 +4,16 @@ import os
 import json
 from helpers import download_icons
 import time
-version = "8.6.1"
+version = "8.8.1"
 
 CURR_DIR = os.getcwd()
 
-API_KEY = "RGAPI-64037db2-ec12-496c-a512-19ad2eb53ae3"
-URL = "https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&version=8.6.1&champListData=all&tags=all&dataById=false&api_key={}".format(API_KEY)
+# Need to get this data from website
+API_KEY = "RGAPI-727b3e9d-14b6-4c7f-a16a-d01ba50d9cff"
+URL = "https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&version={}&champListData=all&tags=all&dataById=false&api_key={}".format(version,API_KEY)
 if API_KEY and not os.path.isfile(CURR_DIR +"/champ_info.json"):
     os.popen("wget {} -O champ_info.json".format(URL))
+
 # Gets json files
 if not os.path.isfile(CURR_DIR + "/champion.json"):
     os.popen("wget https://ddragon.leagueoflegends.com/cdn/{}/data/en_US/champion.json".format(version))

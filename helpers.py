@@ -8,7 +8,7 @@ import sys
 import os
 import time
 
-version = "8.6.1"
+version = "8.8.1"
 
 def open_json(PATH='champ_info.json'):
     f = open(PATH)
