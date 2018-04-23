@@ -1,28 +1,3 @@
-// //var json = $.getJSON("../../item_icons.json");
-// $(document).ready(function(){
-//     // var jsonfile = $.getJSON("../../champ_icons.json", function(json){
-//     //     console.log(json)
-//     // })
-//     var jsonfile = require('../../champ_icons.json')
-//     alert(jsonfile)
-//     var result = JSON.parse(jsonfile)
-//     $('#autocomplete-input-champ').autocomplete({
-//         data: jsonfile,
-//         limit: 10,
-//         minLength: 1
-//     });
-// });
-// $(document).ready(function(){
-//     var json = $.getJSON("../../item_icons.json");
-//     $('#autocomplete-input-item').autocomplete({
-//
-//         data: json,
-//         limit: 10,
-//         minLength: 1
-//     });
-// });
-
-
 $(document).ready(function(){
     $(".dropdown-trigger").dropdown();
 });

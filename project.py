@@ -60,9 +60,11 @@ def edit(num):
     name = None
     if 'Name' in request.form.keys():
         originalname = request.form['Name'].strip()
-        name = originalname.replace(" ","").replace(".","")
+        name = originalname.replace("'","").title().replace(" ","").replace(".","")
     if name == "Wukong":
         name = "MonkeyKing"
+    elif name == "JarvanIv":
+        name = "JarvanIV"
     champion = {}
     champfile = "champ" + num + ".json"
     itemfile = "item" + num + ".json"
