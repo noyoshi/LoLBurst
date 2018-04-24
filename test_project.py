@@ -5,7 +5,7 @@ import project
 import unittest 
 from flask_testing import TestCase
 from flask import Flask, jsonify
-#import base 
+import base 
 
 class ProjectTestCase(TestCase):
     '''
@@ -39,6 +39,12 @@ class ProjectTestCase(TestCase):
     def test_stats_html(self):
         rv = self.app.get('/stats')
         self.assert_template_used('stats.html')
+
+    def test_init_champs(self): 
+        x = base.initialize_champs()
+        assert type(x) == type(['hi'])
+        
+    
 
 if __name__ == '__main__': 
     unittest.main()
