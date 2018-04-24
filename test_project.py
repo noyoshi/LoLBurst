@@ -78,7 +78,7 @@ class ProjectTestCase(TestCase):
 
         champ_names.close()
     
-    def test_sorted(self): 
+    def test_trie(self): 
         obj = base.Trie()
 
         ans_list = ["k", "za", "a"]
