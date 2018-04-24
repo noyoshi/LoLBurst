@@ -16,7 +16,7 @@ def usage(status):
     exit(status)
 
 if __name__ == '__main__': 
-    if len(sys.argv) == 1:
+    if len(sys.argv) > 3:
         usage(0)
 
     if sys.argv[1] == '-u': 
@@ -28,5 +28,7 @@ if __name__ == '__main__':
     else: 
         usage(1)
 
-    bench(obj, "k")
+    key = sys.argv[2]
+
+    bench(obj, key)
 
