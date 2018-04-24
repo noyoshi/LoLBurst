@@ -1,16 +1,27 @@
 #!/bin/sh 
 
-test_python() {
-    chomd +x test_project.py
-    ./test_project.py 
-}
+chmod +x benchmark.py
+make 
 
-test_dict() { 
-    chmod +x benchmark.py
-    make
-    cat /usr/share/dict/american-english \
-        | ./measure ./benchmark.py -s | tail -n1 
-}
+echo "\nTesting sorted"
+echo "=============="
+cat /usr/share/dict/american-english >> temp_f.txt
+cat /usr/share/dict/catala >> temp_f.txt
+cat /usr/share/dict/danish >> temp_f.txt
+echo "a"
+cat temp_f.txt | ./measure ./benchmark.py -s "a" | tail -n1
+echo ""
+echo "ka"
+cat temp_f.txt | ./measure ./benchmark.py -s "ka" | tail -n1
+echo ""
 
-test_python
-test_dict
+echo "Testing unsorted"
+echo "================"
+echo "a"
+cat temp_f.txt | ./measure ./benchmark.py -u "a" | tail -n1
+echo ""
+echo "ka"
+cat temp_f.txt | ./measure ./benchmark.py -u "ka" | tail -n1
+echo ""
+
+rm temp_f.txt
