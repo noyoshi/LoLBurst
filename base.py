@@ -50,6 +50,22 @@ class SortedList(Base):
             self.data.append(elm)
 
         self.data.sort()
+
+    def search(self, key): 
+        if key: 
+            results = []
+            key = key.lower()
+            found = False 
+            for elm in self.data: 
+                if elm.lower().startswith(key): 
+                    found = True 
+                    results.append(elm)
+                elif found: 
+                    return results 
+            return results 
+        else: 
+            return []
+
         # for i, elm in enumerate(data):
         #     if not self.data:
         #         self.data.append(elm)
