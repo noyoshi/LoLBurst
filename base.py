@@ -30,7 +30,8 @@ class Base:
             return []
 
     def p(self):
-        pass
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(', '.join(self.data))
 
 class UnsortedList(Base):
     def __init__(self):
@@ -40,13 +41,38 @@ class UnsortedList(Base):
         for elm in data:
             self.data.append(elm)
 
-    def p(self):
-        pp = pprint.PrettyPrinter(indent=2)
-        pp.pprint(', '.join(self.data))
-
 class SortedList(Base):
-    def __init(self):
+    def __init__(self):
         self.data = []
+
+    def insert(self, data):
+        for i, elm in enumerate(data):
+            if not self.data:
+                self.data.append(elm)
+            else:
+                for j, elm2 in enumerate(self.data):
+                    if elm < elm2:
+                        break
+                self.data.insert(j, elm)
+class Node():
+    def __init__(self):
+        self.word = None
+        self.children = dict()
+
+    def addChild(self,word):
+        pass
+
+class Trie(Base):
+    def __init__(self):
+        self.root = Node()
+
+    def insert(self, data):
+        for elm in data:
+            curr = self.root
+
+
+    def search(self,data):
+        pass
 
 if __name__ == '__main__':
     initialize_champs()

@@ -129,9 +129,15 @@ def backend():
     key = request.args.get("key")
     back = request.args.get("backend")
     print("key: {}, backend: {}".format(key, back))
-    unsorted = UnsortedList()
-    unsorted.insert(session['champs'])
-    data = unsorted.search(key)
+    if back == 'unsorted':
+        ds = UnsortedList()
+    elif back == 'sorted':
+        ds = SortedList()
+    else:
+        return "I'm a teapot"
+
+    ds.insert(session['champs'])
+    data = ds.search(key)
     #data = session['unsorted'].search(key)
     #try:
     #    return jsonify(data)
