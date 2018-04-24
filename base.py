@@ -53,19 +53,19 @@ class SortedList(Base):
 
         self.data.sort()
 
-    def search(self, key): 
-        if key: 
+    def search(self, key):
+        if key:
             results = []
             key = key.lower()
-            found = False 
-            for elm in self.data: 
-                if elm.lower().startswith(key): 
-                    found = True 
+            found = False
+            for elm in self.data:
+                if elm.lower().startswith(key):
+                    found = True
                     results.append(elm)
-                elif found: 
-                    return results 
-            return results 
-        else: 
+                elif found:
+                    return results
+            return results
+        else:
             return []
 
         # for i, elm in enumerate(data):
@@ -83,24 +83,29 @@ class Node():
         self.children = dict()
 
     def insert(self, word, index=0):
+        # Gets the current letter of the word wanting to be added
         curr = word[index]
+        # checks if that letter is already a child
         if curr not in self.children:
             self.children[curr] = Node()
 
         if index + 1 == len(word):
+            #if last letter in the word, then update the string value of the Node class
             self.children[curr].string = word
         else:
+            #if not the last letter, you want to insert the rest of the word to the tree
             self.children[curr].insert(word, index+1)
 
     def get_trie(self, search, index):
-        x = []
-        for key, value in self.children.items():
+        x = [] #initialize empty list
+        for key, value in self.children.items(): #goes through all the children
+        #checks to see if on the right level of the Trie or if the key is the same as the current letter
             if index >= len(search) or key is search[index]:
-                if value.string is not None:
+                if value.string is not None: #Adds the word to the list
                     x.append(value.string)
-                if (value.children != {}):
-                    if index + 1 <= len(search):
-                        x += value.get_trie(search, index+1)
+                if bool(value.children): #if there are children
+                    if index < len(search):
+                        x += value.get_trie(search, index + 1)
                     else:
                         x += value.get_trie(search, index)
 
