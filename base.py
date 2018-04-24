@@ -84,7 +84,7 @@ class Node():
 
     def insert(self, word, index=0):
         # Gets the current letter of the word wanting to be added
-        curr = word[index].lower()
+        curr = word[index]
         # checks if that letter is already a child
         if curr not in self.children:
             self.children[curr] = Node()
