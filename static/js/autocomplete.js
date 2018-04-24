@@ -8,13 +8,13 @@ $(document).ready(function(){
 
 $(document).ready(function() {
     $('#autocomplete-input-champ').on("input", function(e){
-        $.getJSON("/backend", function(result) {
-            var text = $(e.target).val();
+        var text = $(e.target).val();
+        $.getJSON("/backend?key="+text+"&backend=unsorted", function(result) {
             console.log("Inputting " + text + "...");
             console.log(result);
             $("#autocomplete-options-champ").empty();
             $.each(result, function(k, v) {
-                $("#autocomplete-options-champ").append("<li>"+k+" => "+v+"</li>");
+                $("#autocomplete-options-champ").append("<li>"+v+"</li>");
             })
         });
     });

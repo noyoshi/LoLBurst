@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, url_for, jsonify, request
+from flask import Flask, render_template, url_for, jsonify, request, session
 import json
 import os
 import collections
 from helpers import *
 from item_helper import *
 from stat_parse import *
+from base import *
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route("/")
 def index():
@@ -21,6 +23,11 @@ def index():
         os.popen('rm {}/item1.json'.format(CURR_DIR))
     if os.path.isfile(CURR_DIR + "/item2.json"):
         os.popen('rm {}/item2.json'.format(CURR_DIR))
+
+    session['champs'] = initialize_champs()
+    #session['unsorted'] = UnsortedList()
+    #session['unsorted'].insert(champs)
+    #session['unsorted'].p()
     return render_template('item.html')
 
 @app.route("/delete/<num>", methods=['POST', 'GET'])
@@ -117,20 +124,23 @@ def edit(num):
     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
     return render_template('item.html', champ=[champion, itemdatanew, num])
 
-@app.route("/backend", methods=['GET', 'POST'])
+@app.route("/backend", methods=['GET'])
 def backend():
-    data = {"Please": "Work", "Derp": "SOWWY"}
+    key = request.args.get("key")
+    back = request.args.get("backend")
+    print("key: {}, backend: {}".format(key, back))
+    unsorted = UnsortedList()
+    unsorted.insert(session['champs'])
+    data = unsorted.search(key)
+    #data = session['unsorted'].search(key)
+    #try:
+    #    return jsonify(data)
+    #except:
+    #    print("Json 'unsorted' session thing is not good :( 0w0")
     return jsonify(data)
+
 if __name__ == '__main__':
     app.run()
-
-
-
-
-
-
-
-
 
 
 # @app.route(("/champ"), methods=['GET', 'POST'])
