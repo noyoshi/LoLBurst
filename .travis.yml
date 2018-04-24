@@ -5,7 +5,9 @@ python:
 
 install: 
     - pip3 install -r requirements.txt
+    - make
+    - chmod +x test_project.py 
 
 script: 
-    - python3 test_project.py
+    - ./test_project.py
 
