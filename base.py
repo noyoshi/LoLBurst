@@ -46,14 +46,11 @@ class SortedList(Base):
         self.data = []
 
     def insert(self, data):
-        for i, elm in enumerate(data):
-            if not self.data:
-                self.data.append(elm)
-            else:
-                for j, elm2 in enumerate(self.data):
-                    if elm < elm2:
-                        break
-                self.data.insert(j, elm)
+        for elm in data: 
+            self.data.append(elm)
+
+        self.data.sort()
+
 class Node():
     def __init__(self):
         self.word = None
