@@ -84,7 +84,7 @@ class Node():
 
     def insert(self, word, index=0):
         # Gets the current letter of the word wanting to be added
-        curr = word[index]
+        curr = word[index].lower()
         # checks if that letter is already a child
         if curr not in self.children:
             self.children[curr] = Node()
@@ -100,7 +100,7 @@ class Node():
         x = [] #initialize empty list
         for key, value in self.children.items(): #goes through all the children
         #checks to see if on the right level of the Trie or if the key is the same as the current letter
-            if index >= len(search) or key is search[index]:
+            if index >= len(search) or key.lower() is search[index].lower():
                 if value.string is not None: #Adds the word to the list
                     x.append(value.string)
                 if bool(value.children): #if there are children
