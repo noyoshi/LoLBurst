@@ -117,6 +117,10 @@ def edit(num):
     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
     return render_template('item.html', champ=[champion, itemdatanew, num])
 
+@app.route("/backend", methods=['GET', 'POST'])
+def backend():
+    data = {"Please": "Work", "Derp": "SOWWY"}
+    return jsonify(data)
 if __name__ == '__main__':
     app.run()
 
