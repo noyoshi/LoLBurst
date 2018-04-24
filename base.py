@@ -4,8 +4,10 @@ import json
 import pprint
 
 def initialize_champs():
-    champdata = json.load(open("champion.json"))
-    champnames = [champdata["data"][thing]["name"] for thing in champdata["data"].keys()]
+    with open("champion.json") as f:
+        champdata = json.load(f)
+        champnames = [champdata["data"][thing]["name"] for thing in champdata["data"].keys()]
+
     return champnames
     #itemdata = json.load(open("item.json"))
     #itemnames = [itemdata['data'][item]['name'] for item in itemdata['data']]
@@ -64,15 +66,31 @@ class Node():
         self.string = None
         self.children = dict()
 
-    def insert(self, word):
-        # if self.string is None:
-        #     self.string = word
-        # elif self.string is word:
-        #     self.string = word
-        # else
-        pass
+    def insert(self, word, index=0):
+        curr = word[index]
+        if curr not in self.children:
+            self.children[curr] = Node()
 
-class Trie(Base):
+        if index + 1 == len(word):
+            self.children[curr].string = word
+        else:
+            self.children[curr].insert(word, index+1)
+
+    def get_trie(self, search, index):
+        x = []
+        for key, value in self.children.items():
+            if index >= len(search) or key is search[index]:
+                if value.string is not None:
+                    x.append(value.string)
+                if (value.children != {}):
+                    if index + 1 <= len(search):
+                        x += value.get_trie(search, index+1)
+                    else:
+                        x += value.get_trie(search, index)
+
+        return x
+
+class Trie():
     def __init__(self):
         self.root = Node()
 
@@ -80,12 +98,8 @@ class Trie(Base):
         for elm in data:
             self.root.insert(elm)
 
-    def search(self, key):
-        return self.root.search(key)
-
-
-    def search(self,data):
-        pass
+    def search(self,data, index=0):
+        return self.root.get_trie(data, index)
 
 if __name__ == '__main__':
     initialize_champs()

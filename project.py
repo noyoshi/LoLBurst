@@ -133,16 +133,14 @@ def backend():
         ds = UnsortedList()
     elif back == 'sorted':
         ds = SortedList()
+    elif back == "trie":
+        ds = Trie()
     else:
         return "I'm a teapot"
 
     ds.insert(session['champs'])
     data = ds.search(key)
-    #data = session['unsorted'].search(key)
-    #try:
-    #    return jsonify(data)
-    #except:
-    #    print("Json 'unsorted' session thing is not good :( 0w0")
+    
     return jsonify(data)
 
 if __name__ == '__main__':
