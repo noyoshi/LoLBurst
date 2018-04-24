@@ -101,7 +101,7 @@ class Node():
         for key, value in self.children.items(): #goes through all the children
         #checks to see if on the right level of the Trie or if the key is the same as the current letter
             if index >= len(search) or key.lower() == search[index].lower():
-                if value.string is not None: #Adds the word to the list
+                if value.string and value.string.startswith(search): #Adds the word to the list
                     x.append(value.string)
                 if bool(value.children): #if there are children
                     if index < len(search):
