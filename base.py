@@ -46,20 +46,30 @@ class SortedList(Base):
         self.data = []
 
     def insert(self, data):
-        for i, elm in enumerate(data):
-            if not self.data:
-                self.data.append(elm)
-            else:
-                for j, elm2 in enumerate(self.data):
-                    if elm < elm2:
-                        break
-                self.data.insert(j, elm)
+        for elm in data:
+            self.data.append(elm)
+
+        self.data.sort()
+        # for i, elm in enumerate(data):
+        #     if not self.data:
+        #         self.data.append(elm)
+        #     else:
+        #         for j, elm2 in enumerate(self.data):
+        #             if elm < elm2:
+        #                 break
+        #         self.data.insert(j, elm)
+
 class Node():
     def __init__(self):
-        self.word = None
+        self.string = None
         self.children = dict()
 
-    def addChild(self,word):
+    def insert(self, word):
+        # if self.string is None:
+        #     self.string = word
+        # elif self.string is word:
+        #     self.string = word
+        # else
         pass
 
 class Trie(Base):
@@ -68,7 +78,10 @@ class Trie(Base):
 
     def insert(self, data):
         for elm in data:
-            curr = self.root
+            self.root.insert(elm)
+
+    def search(self, key):
+        return self.root.search(key)
 
 
     def search(self,data):
