@@ -12,7 +12,7 @@ def bench(obj, key):
         print(x)
 
 def usage(status): 
-    print("Usage: cat DATA_FILE | ./benchmark.py -[ust]") 
+    print("Usage: cat DATA_FILE | ./benchmark.py -[ust] KEY") 
     exit(status)
 
 if __name__ == '__main__': 
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == '-s': 
         obj = SortedList()
     elif sys.argv[1] == '-t': 
-        pass 
+        obj = Trie() 
     else: 
         usage(1)
 
