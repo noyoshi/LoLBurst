@@ -11,3 +11,4 @@ static/spell_icons/
 champion_icons/
 *.json
 *.zip
+dev-env/
