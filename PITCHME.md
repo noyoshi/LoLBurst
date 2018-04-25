@@ -10,7 +10,7 @@
 
 @fa[database gp-tip](Game data info)
 
-@fa[code-branch gp-tip](Open source platform)
+@fa[github gp-tip](Open source platform)
 
 ---
 
