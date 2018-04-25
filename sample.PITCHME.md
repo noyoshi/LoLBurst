@@ -1,25 +1,27 @@
-# LoL Burst 
+# Black
 
-### Tim Blazek, Edward Atkinson, Noah Yoshida
-
----
-
-## What is it?
-
-<br>
-
-@fa[database gp-tip](Game data info)
-
-@fa[code-branch gp-tip](Open source platform)
+### A GitPitch Presentation Template
 
 ---
 
-## Our use of data structures
+## Tips!
 
 <br>
 
-Besides the obvious... We used a *Radix Tree* to help autocomplete search
-parameters
+@fa[arrows gp-tip](Press F to go Fullscreen)
+
+@fa[microphone gp-tip](Press S for Speaker Notes)
+
+---
+
+## Template Features
+
+- Code Presenting |
+- Repo Source, Static Blocks, GIST |
+- Custom CSS Styling |
+- Slideshow Background Image |
+- Slide-specific Background Images |
+- Custom Logo, TOC, and Footnotes |
 
 ---?code=sample/go/server.go&lang=golang&title=Golang File
 
