@@ -2,6 +2,7 @@
 
 import json
 import pprint
+import time
 
 def initialize_champs():
     with open("champion.json") as f:
@@ -20,13 +21,15 @@ class Base:
         pass
 
     def search(self, key):
+        start = time.time()
         if (key):
             results = []
             key = key.lower()
             for elm in self.data:
                 if elm.lower().startswith(key):
                     results.append(elm)
-
+            end = time.time()
+            print("Time elapsed Base:", end - start)
             return results
         else:
             return []
@@ -49,7 +52,7 @@ class SortedList(Base):
 
     def insert(self, data):
         for elm in data:
-            self.data.append(elm)
+            self.data.append(elm.lower())
 
         self.data.sort()
 
@@ -122,79 +125,214 @@ class SortedList(Base):
 #     def search(self,data, index=0):
 #         return self.root.get_trie(data, index)
 
-class Node():
-    def __init__(self, val):
-        self.value = val
-        self.children = []
-        self.count = 1
-        self.word = None
 
-    def insert(self, word, index=0):
-        original = word
-        wordnew = word[index:]
-        if len(wordnew) > 0:
-            s = wordnew[0]
-            wordnew = wordnew[1:]
-            set = False
-            for char in self.children:
-                if char.value == s:
-                    char.count += 1
-                    char.word = None
-                    char.insert(original, index+1)
-                    set = True
-                    break
-            if not set:
-                tmp = Node(s)
-                tmp.word = original
-                self.children.append(tmp)
-                self.insert(original, index)
 
-        else:
-            self.word = original
 
-    def search(self, pref):
-        curr = pref
-        node = self
-        x = []
-        while len(curr) > 0:
-            set = False
-            for char in node.children:
-                if char.value.lower() == curr[0].lower():
-                    node = char
-                    curr = curr[1:]
-                    set = True
-                    break
-            if not set:
-                return x
-        if node.word:
-            x.append(node.word)
-        if node.count == 1 and node.word != None:
-            return x
-        x = node.r_child(x)
-        return x
 
-    def r_child(self, x):
-        currlist = self.children
-        if len(currlist) > 0:
-            for child in currlist:
-                if child.word:
-                    x.append(child.word)
-                if not(child.count == 1 and child.word != None):
-                    x = child.r_child(x)
 
-        return x
 
+
+
+
+# class Node():
+#     def __init__(self, val):
+#         self.value = val
+#         self.children = []
+#         self.word = None
+#
+#     def insert(self, word, index=0):
+#         original = word
+#         wordnew = word[index:]
+#         if len(wordnew) > 0:
+#             s = wordnew[0]
+#             wordnew = wordnew[1:]
+#             set = False
+#             for char in self.children:
+#                 if char.value.lower() == s.lower():
+#                     char.insert(original, index+1)
+#                     set = True
+#                     break
+#             if not set:
+#                 tmp = Node(s)
+#                 self.children.append(tmp)
+#                 tmp.insert(original, index+1)
+#
+#         else:
+#             self.word = original
+#
+#     def search(self, pref):
+#         curr = pref
+#         node = self
+#         x = []
+#         while len(curr) > 0:
+#             set = False
+#             for char in node.children:
+#                 if char.value.lower() == curr[0].lower():
+#                     node = char
+#                     curr = curr[1:]
+#                     set = True
+#                     break
+#             if not set:
+#                 return x
+#         if node.word:
+#             x.append(node.word)
+#         x = node.r_child(x)
+#         return x
+#
+#     def r_child(self, x):
+#         currlist = self.children
+#         if len(currlist) > 0:
+#             for child in currlist:
+#                 if child.word:
+#                     x.append(child.word)
+#                 x = child.r_child(x)
+#
+#         return x
+#
+#
+# class Trie():
+#     def __init__(self):
+#         self.root = Node("")
+#
+#     def insert(self, data):
+#         for elm in data:
+#             self.root.insert(elm)
+#
+#     def search(self,data):
+#         return self.root.search(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class Node():
+#     def __init__(self, val):
+#         self.value = val
+#         self.children = {}
+#         self.word = None
+#         self.end = False
+#
+#     def insert(self, word, index=0):
+#         original = word
+#         wordnew = word[index:]
+#         if len(wordnew) > 0:
+#             s = wordnew[0]
+#             wordnew = wordnew[1:]
+#             set = False
+#             for char in self.children.keys():
+#                 if char.lower() == s.lower():
+#                     if not self.children[char].end:
+#                         self.children[char].word = None
+#                     self.children[char].insert(original, index+1)
+#                     set = True
+#                     break
+#             if not set:
+#                 tmp = Node(s)
+#                 tmp.word = original
+#                 self.children[s] = tmp
+#                 tmp.insert(original, index+1)
+#
+#         else:
+#             self.word = original
+#             self.end = True
+#
+#     def search(self, pref):
+#         curr = pref
+#         node = self
+#         x = []
+#         while len(curr) > 0:
+#             set = False
+#             for char in node.children.keys():
+#                 if char.lower() == curr[0].lower():
+#                     node = node.children[char]
+#                     curr = curr[1:]
+#                     set = True
+#                     break
+#             if not set:
+#                 return x
+#         if node.word:
+#             x.append(node.word)
+#         x = node.r_child(x)
+#         return x
+#
+#     def r_child(self, x):
+#         currlist = self.children
+#         if len(currlist) > 0:
+#             for child in currlist.keys():
+#                 if currlist[child].word:
+#                     x.append(currlist[child].word)
+#                 x = currlist[child].r_child(x)
+#         return x
+#
+#
+# class Trie():
+#     def __init__(self):
+#         self.root = Node("")
+#
+#     def insert(self, data):
+#         for elm in data:
+#             self.root.insert(elm)
+#
+#     def search(self,data):
+#         return list(set(self.root.search(data)))
+
+# ^^ BEST ONE SO FAR I THINK
 
 class Trie():
     def __init__(self):
-        self.root = Node("")
+        self.root = {"data": {}}
 
     def insert(self, data):
         for elm in data:
-            self.root.insert(elm)
+            currlist = self.root
+            for char in elm:
+                if char.lower() in currlist['data'].keys():
+                    currlist = currlist['data'][char.lower()]
+                else:
+                    currlist['data'][char.lower()] = {"data": {}}
+                    currlist = currlist['data'][char.lower()]
+
+            currlist['word'] = elm
 
     def search(self,data):
-        return self.root.search(data)
+        start = time.time()
+        currlist = self.root
+        #print("hello")
+        #print(currlist)
+        for char in data:
+            if char in currlist['data'].keys():
+                currlist = currlist['data'][char]
+            else:
+                return []
+        x = self.print_dictionary(currlist)
+        end = time.time()
+        print("Time elapsed Trie:", end-start)
+        return x
+
+    def print_dictionary(self, currlist):
+        x = []
+        #print(currlist)
+        if 'word' in currlist.keys():
+            x.append(currlist['word'])
+        for key in currlist['data'].keys():
+            #print(key, currlist.keys())
+            # if 'word' in currlist.keys():
+            #     x.append(currlist['word'])
+            x += self.print_dictionary(currlist['data'][key])
+
+        return x
+
+
 
 if __name__ == '__main__':
     initialize_champs()
