@@ -46,6 +46,7 @@ class ProjectTestCase(TestCase):
         
     def test_unsorted(self): 
         obj = base.UnsortedList()
+
         ans_list = ["k", "za", "a"]
         champ_names = open("champnames.txt", "r")
         champ_list = [x.strip() for x in champ_names.readlines()]
@@ -59,6 +60,41 @@ class ProjectTestCase(TestCase):
                 assert ans == sorted(obj.search(a))
 
         champ_names.close()
+    
+    def test_sorted(self): 
+        obj = base.SortedList()
+
+        ans_list = ["k", "za", "a"]
+        champ_names = open("champnames.txt", "r")
+        champ_list = [x.strip() for x in champ_names.readlines()]
+        
+        # Insert into object
+        obj.insert(champ_list)
+
+        for a in ans_list: 
+            with open("tests/"+ a +"_ans.txt", "r") as f: 
+                ans = [x.strip() for x in f.readlines()]
+                assert ans == sorted(obj.search(a))
+
+        champ_names.close()
+    
+    def test_trie(self): 
+        obj = base.Trie()
+
+        ans_list = ["k", "za", "a"]
+        champ_names = open("champnames.txt", "r")
+        champ_list = [x.strip() for x in champ_names.readlines()]
+        
+        # Insert into object
+        obj.insert(champ_list)
+
+        for a in ans_list: 
+            with open("tests/"+ a +"_ans.txt", "r") as f: 
+                ans = [x.strip() for x in f.readlines()]
+                assert ans == sorted(obj.search(a))
+
+        champ_names.close()
+
 
 
 if __name__ == '__main__': 
