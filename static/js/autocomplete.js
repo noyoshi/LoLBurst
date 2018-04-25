@@ -60,6 +60,7 @@ $(document).ready(function() {
         });
 
         $(`#autocomplete-input-${type}`).focus(function(e) {
+            var text = $(this).val();
             console.log(text);
             load_autocomplete(type, text);
         });
