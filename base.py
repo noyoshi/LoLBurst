@@ -10,8 +10,13 @@ def initialize_champs():
         champnames = [champdata["data"][thing]["name"] for thing in champdata["data"].keys()]
 
     return champnames
-    #itemdata = json.load(open("item.json"))
-    #itemnames = [itemdata['data'][item]['name'] for item in itemdata['data']]
+
+def initialize_items():
+    with open('item.json') as f:
+        itemdata = json.load(f)
+        itemnames = [itemdata['data'][item]['name'] for item in itemdata['data']]
+
+    return itemnames
 
 class Base:
     def __init__(self):

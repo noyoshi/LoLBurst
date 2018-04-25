@@ -32,6 +32,18 @@ function add_option(type, data) {
     $(`#autocomplete-options-${type}`).append(`<li>${data}</li>`);
 }
 
+function load_autocomplete(type, text) {
+    var backend = $("input[name=autocomplete-radio-"+type+"]:checked").val();
+    $.getJSON(`/backend?key=${text}&backend=${backend}&datatype=${type}`, function(result) {
+        console.log("Inputting "+type+": " + text + "...");
+        console.log(result);
+        $(`#autocomplete-options-${type}`).empty();
+        $.each(result, function(k, v) {
+            add_option(type, v);
+        })
+    });
+}
+
 $(document).ready(function() {
 
     var types = ["champ", "item"];
@@ -40,20 +52,16 @@ $(document).ready(function() {
         add_options_list(type);
         $('#autocomplete-input-'+type).on("input", function(e){
             var text = $(e.target).val();
-            var backend = $("input[name=autocomplete-radio-"+type+"]:checked").val();
-            $.getJSON(`/backend?key=${text}&backend=${backend}&datatype=${type}`, function(result) {
-                console.log("Inputting "+type+": " + text + "...");
-                console.log(result);
-                $(`#autocomplete-options-${type}`).empty();
-                $.each(result, function(k, v) {
-                    //$(`#autocomplete-options-${type}`).append("<li>"+v+"</li>");
-                    add_option(type, v);
-                })
-            });
+            load_autocomplete(type, text);
         });
 
-        $(`#autocomplete-input-${type}`).focusout(function() {
+        $(`#autocomplete-input-${type}`).focusout(function(e) {
             $(`#autocomplete-options-${type}`).empty();
+        });
+
+        $(`#autocomplete-input-${type}`).focus(function(e) {
+            console.log(text);
+            load_autocomplete(type, text);
         });
     });
 

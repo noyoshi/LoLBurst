@@ -25,9 +25,7 @@ def index():
         os.popen('rm {}/item2.json'.format(CURR_DIR))
 
     session['champs'] = initialize_champs()
-    #session['unsorted'] = UnsortedList()
-    #session['unsorted'].insert(champs)
-    #session['unsorted'].p()
+    session['items'] = initialize_items()
     return render_template('item.html')
 
 @app.route("/delete/<num>", methods=['POST', 'GET'])
@@ -148,8 +146,7 @@ def backend():
         data = session['champs']
     elif datatype == "item":
         if not session.get('items'):
-            #TODO: change to use items
-            session['items'] = initialize_champs()
+            session['items'] = initialize_items()
         data = session['items']
     else:
         return ("I'm a teapot", 412)
