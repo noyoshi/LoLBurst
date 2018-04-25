@@ -29,9 +29,11 @@ class Base:
                 if elm.lower().startswith(key):
                     results.append(elm)
             end = time.time()
-            print("Time elapsed Base:", end - start)
+            print("Search: ", end - start)
             return results
         else:
+            end = time.time()
+            print("Search: ", end - start)
             return []
 
     def p(self):
@@ -43,20 +45,26 @@ class UnsortedList(Base):
         self.data = []
 
     def insert(self, data):
+        start = time.time()
         for elm in data:
             self.data.append(elm)
+        end = time.time()
+        print("Insert: ", end-start)
 
 class SortedList(Base):
     def __init__(self):
         self.data = []
 
     def insert(self, data):
+        start = time.time()
         for elm in data:
             self.data.append(elm.lower())
 
         self.data.sort()
-
+        end = time.time()
+        print("Insert: ",end-start)
     def search(self, key):
+        start = time.time()
         if key:
             results = []
             key = key.lower()
@@ -66,9 +74,15 @@ class SortedList(Base):
                     found = True
                     results.append(elm)
                 elif found:
+                    end = time.time()
+                    print("Search: ", end-start)
                     return results
+            end = time.time()
+            print("Search: ", end-start)
             return results
         else:
+            end = time.time()
+            print("Search: ", end-start)
             return []
 
         # for i, elm in enumerate(data):
@@ -290,45 +304,48 @@ class SortedList(Base):
 
 class Trie():
     def __init__(self):
-        self.root = {"data": {}}
+        self.root = {}
 
     def insert(self, data):
+        start = time.time()
         for elm in data:
             currlist = self.root
             for char in elm:
-                if char.lower() in currlist['data'].keys():
-                    currlist = currlist['data'][char.lower()]
+                if char.lower() in currlist.keys():
+                    currlist = currlist[char.lower()]
                 else:
-                    currlist['data'][char.lower()] = {"data": {}}
-                    currlist = currlist['data'][char.lower()]
+                    currlist[char.lower()] = {}
+                    currlist = currlist[char.lower()]
 
             currlist['word'] = elm
+        end = time.time()
+        print("Insert: ",end-start)
 
     def search(self,data):
         start = time.time()
         currlist = self.root
-        #print("hello")
-        #print(currlist)
         for char in data:
-            if char in currlist['data'].keys():
-                currlist = currlist['data'][char]
+            if char in currlist.keys():
+                currlist = currlist[char]
             else:
+                end = time.time()
+                print("Search: ", end-start)
                 return []
         x = self.print_dictionary(currlist)
         end = time.time()
-        print("Time elapsed Trie:", end-start)
+        print("Search: ", end-start)
         return x
 
     def print_dictionary(self, currlist):
         x = []
-        #print(currlist)
+
         if 'word' in currlist.keys():
             x.append(currlist['word'])
-        for key in currlist['data'].keys():
-            #print(key, currlist.keys())
-            # if 'word' in currlist.keys():
-            #     x.append(currlist['word'])
-            x += self.print_dictionary(currlist['data'][key])
+
+
+        for key in currlist.keys():
+            if key != "word":
+                x += self.print_dictionary(currlist[key])
 
         return x
 
