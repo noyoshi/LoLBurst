@@ -126,9 +126,13 @@ def edit(num):
 
 @app.route("/backend", methods=['GET'])
 def backend():
-    key = request.args.get("key")
-    back = request.args.get("backend")
-    print("key: {}, backend: {}".format(key, back))
+    key = request.args.get("key", "")
+    if not key:
+        return ('', 204)
+
+    back = request.args.get("backend", "trie")
+    datatype = request.args.get("datatype", "champs")
+    print("key: {}, backend: {}, datatype: {}".format(key, back, datatype))
     if back == 'unsorted':
         ds = UnsortedList()
     elif back == 'sorted':
@@ -136,15 +140,24 @@ def backend():
     elif back == "trie":
         ds = Trie()
     else:
-        return "I'm a teapot"
+        return ("I'm a teapot", 412)
 
-    if not session.get('champs'):
-        session['champs'] = initialize_champs()
+    if datatype == 'champ':
+        if not session.get('champs'):
+            session['champs'] = initialize_champs()
+        data = session['champs']
+    elif datatype == "item":
+        if not session.get('items'):
+            #TODO: change to use items
+            session['items'] = initialize_champs()
+        data = session['items']
+    else:
+        return ("I'm a teapot", 412)
 
-    ds.insert(session['champs'])
+    ds.insert(data)
     data = ds.search(key)
     
-    return jsonify(data)
+    return (jsonify(data), 200)
 
 if __name__ == '__main__':
     app.run()

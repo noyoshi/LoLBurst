@@ -11,5 +11,7 @@ static/spell_icons/
 champion_icons/
 *.json
 *.zip
+*.swp
+*.swo
 dev-env/
 measure

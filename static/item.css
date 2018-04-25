@@ -22,3 +22,9 @@ body {
 main {
     flex: 1 0 auto;
 }
+
+/*
+input[type="checkbox"],input[type="radio"]{
+    position: static !important;
+}
+*/
