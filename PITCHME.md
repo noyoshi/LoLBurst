@@ -23,59 +23,6 @@ parameters
 
 ---?code=base.py&lang=python File
 
-@title[Radix Tree in Python]
-
-<p><span class="slide-title">Radix Tree (Trie)</span></p>
-
-```
-class Trie():
-    def __init__(self):
-        self.root = {}
-
-    def insert(self, data):
-        start = time.time()
-        for elm in data:
-            currlist = self.root
-            for char in elm:
-                if char.lower() in currlist.keys():
-                    currlist = currlist[char.lower()]
-                else:
-                    currlist[char.lower()] = {}
-                    currlist = currlist[char.lower()]
-
-            currlist[0] = elm
-        end = time.time()
-        print("Insert: ",end-start)
-
-    def search(self,data):
-        start = time.time()
-        currlist = self.root
-        for char in data:
-            if char in currlist.keys():
-                currlist = currlist[char]
-            else:
-                end = time.time()
-                print("Search: ", end-start)
-                return []
-        x = self.print_dictionary(currlist)
-        end = time.time()
-        print("Search: ", end-start)
-        return x
-
-    def print_dictionary(self, currlist):
-        x = []
-
-        if 0 in currlist.keys():
-            x.append(currlist[0])
-
-
-        for key in currlist.keys():
-            if key != 0:
-                x += self.print_dictionary(currlist[key])
-
-        return x
-
-```
 
 @[1,2](You can present code inlined within your slide markdown too.)
 @[9-17](Displayed using code-syntax highlighting just like your IDE.)
