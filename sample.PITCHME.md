@@ -1,27 +1,62 @@
-# LoL Burst 
+# Black
 
-### Tim Blazek, Edward Atkinson, Noah Yoshida
-
----
-
-## What is it?
-
-<br>
-
-@fa[database gp-tip](Game data info)
-
-@fa[github gp-tip](Open source platform)
+### A GitPitch Presentation Template
 
 ---
 
-## Our use of data structures
+## Tips!
 
 <br>
 
-Besides the obvious... We used a *Radix Tree* to help autocomplete search
-parameters
+@fa[arrows gp-tip](Press F to go Fullscreen)
 
----?code=base.py&lang=python&title=Radix Tree
+@fa[microphone gp-tip](Press S for Speaker Notes)
+
+---
+
+## Template Features
+
+- Code Presenting |
+- Repo Source, Static Blocks, GIST |
+- Custom CSS Styling |
+- Slideshow Background Image |
+- Slide-specific Background Images |
+- Custom Logo, TOC, and Footnotes |
+
+---?code=sample/go/server.go&lang=golang&title=Golang File
+
+@[1,3-6](Present code found within any repo source file.)
+@[8-18](Without ever leaving your slideshow.)
+@[19-28](Using GitPitch code-presenting with (optional) annotations.)
+
+---
+
+@title[JavaScript Block]
+
+<p><span class="slide-title">JavaScript Block</span></p>
+
+```javascript
+// Include http module.
+var http = require("http");
+
+// Create the server. Function passed as parameter
+// is called on every request made.
+http.createServer(function (request, response) {
+  // Attach listener on end event.  This event is
+  // called when client sent, awaiting response.
+  request.on("end", function () {
+    // Write headers to the response.
+    // HTTP 200 status, Content-Type text/plain.
+    response.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
+    // Send data and end response.
+    response.end('Hello HTTP!');
+  });
+
+// Listen on the 8080 port.
+}).listen(8080);
+```
 
 @[1,2](You can present code inlined within your slide markdown too.)
 @[9-17](Displayed using code-syntax highlighting just like your IDE.)
