@@ -58,7 +58,7 @@ class SortedList(Base):
     def insert(self, data):
         start = time.time()
         for elm in data:
-            self.data.append(elm.lower())
+            self.data.append(elm)
 
         self.data.sort()
         end = time.time()
@@ -69,8 +69,8 @@ class SortedList(Base):
             results = []
             key = key.lower()
             found = False
-            for elm in self.data:
-                if elm.lower().startswith(key):
+            for index, elm in enumerate(self.data):
+                if elm.lower().startswith(key.lower()):
                     found = True
                     results.append(elm)
                 elif found:
@@ -317,7 +317,7 @@ class Trie():
                     currlist[char.lower()] = {}
                     currlist = currlist[char.lower()]
 
-            currlist['word'] = elm
+            currlist[0] = elm
         end = time.time()
         print("Insert: ",end-start)
 
@@ -339,12 +339,12 @@ class Trie():
     def print_dictionary(self, currlist):
         x = []
 
-        if 'word' in currlist.keys():
-            x.append(currlist['word'])
+        if 0 in currlist.keys():
+            x.append(currlist[0])
 
 
         for key in currlist.keys():
-            if key != "word":
+            if key != 0:
                 x += self.print_dictionary(currlist[key])
 
         return x
