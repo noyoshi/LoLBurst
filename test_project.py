@@ -47,7 +47,7 @@ class ProjectTestCase(TestCase):
     def test_unsorted(self): 
         obj = base.UnsortedList()
 
-        ans_list = ["k", "za", "a"]
+        ans_list = ["k", "za", "a", "ga", "ma"]
         champ_names = open("champnames.txt", "r")
         champ_list = [x.strip() for x in champ_names.readlines()]
         
@@ -64,7 +64,7 @@ class ProjectTestCase(TestCase):
     def test_sorted(self): 
         obj = base.SortedList()
 
-        ans_list = ["k", "za", "a"]
+        ans_list = ["k", "za", "a", "ga", "ma"]
         champ_names = open("champnames.txt", "r")
         champ_list = [x.strip() for x in champ_names.readlines()]
         
@@ -81,7 +81,7 @@ class ProjectTestCase(TestCase):
     def test_trie(self): 
         obj = base.Trie()
 
-        ans_list = ["k", "za", "a"]
+        ans_list = ["k", "za", "a", "ga", "ma"]
         champ_names = open("champnames.txt", "r")
         champ_list = [x.strip() for x in champ_names.readlines()]
         
