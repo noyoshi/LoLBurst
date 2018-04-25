@@ -126,6 +126,7 @@ class Node():
     def __init__(self, val):
         self.value = val
         self.children = []
+        self.count = 1
         self.word = None
 
     def insert(self, word, index=0):
@@ -137,11 +138,14 @@ class Node():
             set = False
             for char in self.children:
                 if char.value == s:
+                    char.count += 1
+                    char.word = None
                     char.insert(original, index+1)
                     set = True
                     break
             if not set:
                 tmp = Node(s)
+                tmp.word = original
                 self.children.append(tmp)
                 self.insert(original, index)
 
@@ -164,6 +168,8 @@ class Node():
                 return x
         if node.word:
             x.append(node.word)
+        if node.count == 1 and node.word != None:
+            return x
         x = node.r_child(x)
         return x
 
@@ -173,7 +179,8 @@ class Node():
             for child in currlist:
                 if child.word:
                     x.append(child.word)
-                x = child.r_child(x)
+                if not(child.count == 1 and node.word != None):
+                    x = child.r_child(x)
 
         return x
 
