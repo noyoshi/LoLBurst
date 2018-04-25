@@ -179,7 +179,7 @@ class Node():
             for child in currlist:
                 if child.word:
                     x.append(child.word)
-                if not(child.count == 1 and node.word != None):
+                if not(child.count == 1 and child.word != None):
                     x = child.r_child(x)
 
         return x
