@@ -85,15 +85,73 @@ class SortedList(Base):
             print("Search: ", end-start)
             return []
 
-        # for i, elm in enumerate(data):
-        #     if not self.data:
-        #         self.data.append(elm)
-        #     else:
-        #         for j, elm2 in enumerate(self.data):
-        #             if elm < elm2:
-        #                 break
-        #         self.data.insert(j, elm)
+class Trie():
+    def __init__(self):
+        self.root = {}
 
+    def insert(self, data):
+        start = time.time()
+        for elm in data:
+            currlist = self.root
+            for char in elm:
+                if char.lower() in currlist.keys():
+                    currlist = currlist[char.lower()]
+                else:
+                    currlist[char.lower()] = {}
+                    currlist = currlist[char.lower()]
+
+            currlist[0] = elm
+        end = time.time()
+        print("Insert: ",end-start)
+
+    def search(self,data):
+        start = time.time()
+        currlist = self.root
+        for char in data:
+            if char in currlist.keys():
+                currlist = currlist[char]
+            else:
+                end = time.time()
+                print("Search: ", end-start)
+                return []
+        x = self.print_dictionary(currlist)
+        end = time.time()
+        print("Search: ", end-start)
+        return x
+
+    def print_dictionary(self, currlist):
+        x = []
+        if 0 in currlist.keys():
+            x.append(currlist[0])
+        for key in currlist.keys():
+            if key != 0:
+                x += self.print_dictionary(currlist[key])
+        return x
+
+# class Ternary():
+#     def __init__(self):
+#         self.root = {}
+#     def insert(self, data):
+#         index = int(len(data)/2)
+#         left = data[:index]
+#         right  = data[index+1:]
+#         self.insertword(data[index])
+#         if index-1 >= 0:
+#             self.insert(left)
+#         if len(right) > 0:
+#             self.insert(right)
+#
+#     def insertword(self, word):
+#         curr = self.root
+#         for char in word:
+#             if not("val" in curr.keys()):
+#                 curr["val"] = char
+#     def search(self, data):
+#         pass
+#         return x
+
+if __name__ == '__main__':
+    initialize_champs()
 # class Node():
 #     def __init__(self):
 #         self.string = None
@@ -301,55 +359,3 @@ class SortedList(Base):
 #         return list(set(self.root.search(data)))
 
 # ^^ BEST ONE SO FAR I THINK
-
-class Trie():
-    def __init__(self):
-        self.root = {}
-
-    def insert(self, data):
-        start = time.time()
-        for elm in data:
-            currlist = self.root
-            for char in elm:
-                if char.lower() in currlist.keys():
-                    currlist = currlist[char.lower()]
-                else:
-                    currlist[char.lower()] = {}
-                    currlist = currlist[char.lower()]
-
-            currlist[0] = elm
-        end = time.time()
-        print("Insert: ",end-start)
-
-    def search(self,data):
-        start = time.time()
-        currlist = self.root
-        for char in data:
-            if char in currlist.keys():
-                currlist = currlist[char]
-            else:
-                end = time.time()
-                print("Search: ", end-start)
-                return []
-        x = self.print_dictionary(currlist)
-        end = time.time()
-        print("Search: ", end-start)
-        return x
-
-    def print_dictionary(self, currlist):
-        x = []
-
-        if 0 in currlist.keys():
-            x.append(currlist[0])
-
-
-        for key in currlist.keys():
-            if key != 0:
-                x += self.print_dictionary(currlist[key])
-
-        return x
-
-
-
-if __name__ == '__main__':
-    initialize_champs()
