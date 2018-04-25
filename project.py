@@ -138,6 +138,9 @@ def backend():
     else:
         return "I'm a teapot"
 
+    if not session.get('champs'):
+        session['champs'] = initialize_champs()
+
     ds.insert(session['champs'])
     data = ds.search(key)
     
