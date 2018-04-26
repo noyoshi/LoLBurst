@@ -32,7 +32,7 @@ def stat_calc(level):
     if champ1_dict:
         champ_stats1 = champ1_dict["stats"]
     if champ2_dict:
-        champ_stat2 = champ2_dict["stats"]
+        champ_stats2 = champ2_dict["stats"]
     if item1_dict:
         item_stats1 = compile_item_stats(item1_dict)
     if item2_dict:
@@ -42,15 +42,26 @@ def stat_calc(level):
             if key.endswith("perlevel") and not key.startswith("attackspeed"):
                 temp = key[0:-8]
                 champ_stats1[temp] = champ_stats1[temp] + (champ_stats1[key] * (level-1))
-        champ_stats1["attackspeed"] = (0.625/(1+champ_stats1["attackspeedoffset"])) * (1 + (champ_stats1["attackspeedperlevel"]*(level-1)/100 ))
+        champ_stats1["attackspeed"] = round((0.625/(1+champ_stats1["attackspeedoffset"])) * (1 + (champ_stats1["attackspeedperlevel"]*(level-1)/100 )),3)
     if champ_stats2:
         for key in champ_stats2.keys():
             if key.endswith("perlevel") and not key.startswith("attackspeed"):
                 temp = key[0:-8]
                 champ_stats2[temp] = champ_stats2[temp] + (champ_stats2[key] * (level-1))
-        champ_stats2["attackspeed"] = (0.625/(1+champ_stats2["attackspeedoffset"])) * (1 + (champ_stats2["attackspeedperlevel"]*(level-1)/100 ))
-    if item_stats1 and champ_stats1:
-        for key in item_stats1.keys():
+        champ_stats2["attackspeed"] = round((0.625/(1+champ_stats2["attackspeedoffset"])) * (1 + (champ_stats2["attackspeedperlevel"]*(level-1)/100 )),3)
+    champ_stats1 = combine(item_stats1, champ_stats1,level)
+    if champ_stats1:
+        champ_stats1["name"] = champ1_dict["id"]
+        champ_stats1["image"] = "/static/champ_icons/" + champ1_dict["name"] + ".png"
+    champ_stats2 = combine(item_stats2, champ_stats2,level)
+    if champ_stats2:
+        champ_stats2["name"] = champ2_dict["id"]
+        champ_stats2["image"] = "/static/champ_icons/" + champ2_dict["name"] + ".png"
+    return champ_stats1, champ_stats2
+
+def combine(item_stats,champ_stats,level):
+    if item_stats and champ_stats:
+        for key in item_stats.keys():
             temp = key.lower()
             temp = temp[0:-3]
             #if temp.endswith("pool"):
@@ -58,33 +69,18 @@ def stat_calc(level):
             temp = temp.replace("movementspeed","movespeed").replace("pool","").replace("critchance","crit").replace("physicaldamage","attackdamage")
 
             if temp.startswith("flat"):
-                champ_stats1[ temp[4:] ] = champ_stats1.get(temp[4:],0) + item_stats1[key]
+                champ_stats[ temp[4:] ] = champ_stats.get(temp[4:],0) + item_stats[key]
             elif temp.startswith("percent"):
                 stat = temp[7:]
                 if stat != "attackspeed":
-                    champ_stats1[stat] = champ_stats1[stat]*(1+item_stats1[key])
+                    champ_stats[stat] = champ_stats[stat]*(1+item_stats[key])
                 else:
-                    champ_stats1["attackspeed"] = (0.625/(1+champ_stats1["attackspeedoffset"])) * (1 + ((champ_stats1["attackspeedperlevel"]*(level-1) ) + item_stats1[key])/100)
-        for key in champ_stats1.keys():
-            champ_stats1[key] = round(champ_stats1[key],3)
-    # if item_stats2 and champ_stats2:
-    #     for key in item_stats2.keys():
-    #         temp = key.lower()
-    #         temp = temp[0:-3]
-    #         if temp.endswith("pool"):
-    #             temp = temp [:-4]
-    #         if "movementspeed" in temp:
-    #             temp = temp.replace("movemenetspeed", "movespeed")
-    #         if temp.startswith("flat"):
-    #             champ_stats2[ temp[4:] ] += item_stats2[key]
-    #         elif temp.startswith("percent"):
-    #             stat = temp[7:]
-    #             if stat != "attackspeed":
-    #                 champ_stats2[stat] = champ_stats2[stat]*(1+item_stats2[key])
-    #             else:
-    #                 champ_stats2["attackspeed"] = (0.625/(1+champ_stats2["attackspeedoffset"])) * (1 + (champ_stats2["attackspeedperlevel"]*(level-1) ) + item_stats2[key])
-    print(champ_stats1)
-    return champ_stats1, champ_stats2
+                    champ_stats["attackspeed"] = (0.625/(1+champ_stats["attackspeedoffset"])) * (1 + ((champ_stats["attackspeedperlevel"]*(level-1) ) + item_stats[key])/100)
+        for key in champ_stats.keys():
+            champ_stats[key] = round(champ_stats[key],3)
+
+    print(champ_stats)
+    return champ_stats
 
 
 

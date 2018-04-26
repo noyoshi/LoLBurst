@@ -11,7 +11,51 @@
 <script type="text/javascript" src="{{ url_for('static',filename='js/loading.js') }}"></script>
 
 <body>
-    <p>stats page</p>
+    <div class="row">
+    <div class="col s12 m7">
+    {% if stats[0] %}
+    <h2 class="header">Champion 1: {{ stats[0].name }}</h2>
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src= {{ stats[0].image }} >
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>Attack Speed: {{ stats[0].attackspeed }}</p>
+          <p>Critical Strike Percent: {{ stats[0].crit }}</p>
+          <p>Attack Damage: {{ stats[0].attackdamage }}</p>
+          <p>Armor: {{ stats[0].armor }}</p>
+          <p>Magic Resistance: {{ stats[0].spellblock }}</p>
+          <p>Health: {{ stats[0].hp }}</p>
+          <p>Mana Pool: {{ stats[0].mp }}</p>
+          <p>Movement Speed: {{ stats[0].movespeed }}</p>
+
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% if stats[1] %}
+      <h2 class="header">Champion 2: {{ stats[1].name }}</h2>
+      <div class="card horizontal">
+        <div class="card-image">
+          <img src= {{ stats[1].image }} >
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+              <p>Attack Speed: {{ stats[1].attackspeed }}</p>
+              <p>Critical Strike Percent: {{ stats[1].crit }}</p>
+              <p>Attack Damage: {{ stats[1].attackdamage }}</p>
+              <p>Armor: {{ stats[1].armor }}</p>
+              <p>Magic Resistance: {{ stats[1].spellblock }}</p>
+              <p>Health: {{ stats[1].hp }}</p>
+              <p>Mana Pool: {{ stats[1].mp }}</p>
+              <p>Movement Speed: {{ stats[1].movespeed }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+</div>
+</div>
 </body>
 
 
