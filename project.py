@@ -49,7 +49,7 @@ def delete(num):
         with open(itemfile, 'w') as f:
             json.dump(INFO, f)
         return render_template("item.html", champ=[champion,INFO, num])
-    except:
+    except e:
         return ("I'm a teapot", 412)
 
 
@@ -68,11 +68,15 @@ def edit(num):
     name = None
     if 'Name' in request.form.keys():
         originalname = request.form['Name'].strip()
-        name = originalname.replace("'","").title().replace(" ","").replace(".","")
-    if name == "Wukong":
-        name = "MonkeyKing"
-    elif name == "JarvanIv":
-        name = "JarvanIV"
+        if not session.get('champs'):
+            session['champs'] = initialize_champs()
+
+        name = session['champs'].get(originalname, None)
+        #name = originalname.replace("'","").title().replace(" ","").replace(".","")
+    #if name == "Wukong":
+        #name = "MonkeyKing"
+    #elif name == "JarvanIv":
+        #name = "JarvanIV"
     champion = {}
     champfile = "champ" + num + ".json"
     itemfile = "item" + num + ".json"
@@ -96,6 +100,10 @@ def edit(num):
     item = None
     if 'Item' in request.form.keys():
         item = request.form['Item'].strip()
+        if not session.get('items'):
+            session['items'] = initialize_champs()
+
+        item = session['items'].get(item, None)
     tempItemDict = get_item_icon()
     itemDict = {}
     itemdata = {}
@@ -169,14 +177,15 @@ def backend():
 
     data = []
     for e in elements:
+        ID = info[e]
         if datatype == 'champ':
-            champ = json.load(open('champion.json'))['data'][info[e]]
+            champ = json.load(open('champion.json'))['data'][ID]
             image = champ['image']['full']
-            data.append({'name': e, 'image': image})
+            data.append({'name': e, 'image': image, 'id': ID})
         else:
-            item = json.load(open('item.json'))['data'][info[e]]
+            item = json.load(open('item.json'))['data'][ID]
             image = item['image']['full']
-            data.append({'name': e, 'image': image})
+            data.append({'name': e, 'image': image, 'id': ID})
     
     return (jsonify(data), 200)
 
