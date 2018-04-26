@@ -23,9 +23,15 @@ parameters
 
 ---?code=base.py&lang=python&title=Radix Tree
 
-@[1,2](You can present code inlined within your slide markdown too.)
-@[9-17](Displayed using code-syntax highlighting just like your IDE.)
-@[19-20](Again, all of this without ever leaving your slideshow.)
+@[7-14](Here we are initializing the tree)
+@[16-23](Here as well)
+
+@[52-60](We simply add to a list for UnsortedList)
+@[63-72](In sorted list, we sort the list after creating it)
+@[72](Python provides an nlog n sort)
+@[80-88](When searching the sorted list, if the results have been found,
+then are not found, we stop searching)
+
 
 ---?gist=onetapbeyond/494e0fecaf0d6a2aa2acadfb8eb9d6e8&lang=scala&title=Scala GIST
 
