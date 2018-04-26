@@ -37,13 +37,39 @@ function add_option(type, data, key, index) {
         <img src=${url} />
         </div></li>
     `);
+    $li.addClass(type);
     $li.keydown(function(e) {
         if (e.which == 13) {
-            console.log("Enter on " + $(this).text());
+            var champ;
+            if ($(this).hasClass('champ'))
+                type = 'champ';
+            else
+                type = 'item';
+
+            var text = $(this).text().trim();
+            console.log("Entered on " + text + " of type " + type);
+            search(type, text);
         }
+    });
+    $li.click(function(e) {
+        var type;
+        if ($(this).hasClass('champ'))
+            type = 'champ';
+        else
+            type = 'item';
+
+        var text = $(this).text().trim();
+        console.log("Clicked on " + text + " of type " + type);
+        search(type, text);
     });
     $(`#autocomplete-options-${type}`).append($li);
 
+}
+
+function search(type, text) {
+    $input = $(`#autocomplete-input-${type}`);
+    $input.val(text.trim());
+    $input.focus();
 }
 
 function load_autocomplete(type, text) {
@@ -61,7 +87,6 @@ function load_autocomplete(type, text) {
 $(document).ready(function() {
     var types = ["champ", "item"];
     $.each(types, function(key, type) {
-        console.log(type);
         add_options_list(type);
         $('#autocomplete-input-'+type).on("input", function(e){
             var text = $(e.target).val();
