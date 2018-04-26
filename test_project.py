@@ -42,7 +42,7 @@ class ProjectTestCase(TestCase):
 
     def test_init_champs(self): 
         x = base.initialize_champs()
-        assert type(x) == type(['hi'])
+        assert type(x) == type(dict())
         
     def test_unsorted(self): 
         obj = base.UnsortedList()
