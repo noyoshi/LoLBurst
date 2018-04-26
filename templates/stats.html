@@ -55,6 +55,9 @@
         </div>
       </div>
     {% endif %}
+    {% if not stats[1] and not stats[0] %}
+    <p>No present champion data, enter champions under the <b>Champion and Itemization</b> tab above</p>
+    {% endif %}
 </div>
 </div>
 </body>

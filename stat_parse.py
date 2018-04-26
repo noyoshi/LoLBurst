@@ -91,8 +91,6 @@ def combine(item_stats,champ_stats,level):
                     champ_stats["attackspeed"] = (0.625/(1+champ_stats["attackspeedoffset"])) * (1 + ((champ_stats["attackspeedperlevel"]*(level-1) ) + item_stats[key])/100)
         for key in champ_stats.keys():
             champ_stats[key] = round(champ_stats[key],3)
-
-    print(champ_stats)
     return champ_stats
 
 
