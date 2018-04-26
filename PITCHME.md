@@ -29,7 +29,7 @@ parameters
 @[52-60](We simply add to a list for UnsortedList)
 @[63-72](In sorted list, we sort the list after creating it)
 @[72](Python provides an nlog n sort)
-@[80-88](We stop searching after we stop finding elements in sorted)
+@[80-88](We stop searching after we stop finding elements in sorted list, as list is sortex lexographically)
 
 ---?gist=onetapbeyond/494e0fecaf0d6a2aa2acadfb8eb9d6e8&lang=scala&title=Scala GIST
 
