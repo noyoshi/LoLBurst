@@ -32,22 +32,25 @@ def index():
 def delete(num):
     champfile = "champ" + num + ".json"
     itemfile = "item" + num +".json"
-    f = open(itemfile)
-    CURR_DIR = os.getcwd()
-    champion = {}
-    if os.path.isfile('{}/{}'.format(CURR_DIR,champfile)):
-        # Loads config file
-        q = open('{}/{}'.format(CURR_DIR,champfile))
-        champion = json.loads(q.read())
-    INFO = json.loads(f.read())
-    for searchkey in request.form.keys():
-        #print(name)
-        if searchkey in INFO.keys():
-            del INFO[searchkey]
-        #some_dict = {key: value for key,value in INFO.items() if key is not searchkey}
-    with open(itemfile, 'w') as f:
-        json.dump(INFO, f)
-    return render_template("item.html", champ=[champion,INFO, num])
+    try:
+        f = open(itemfile)
+        CURR_DIR = os.getcwd()
+        champion = {}
+        if os.path.isfile('{}/{}'.format(CURR_DIR,champfile)):
+            # Loads config file
+            q = open('{}/{}'.format(CURR_DIR,champfile))
+            champion = json.loads(q.read())
+        INFO = json.loads(f.read())
+        for searchkey in request.form.keys():
+            #print(name)
+            if searchkey in INFO.keys():
+                del INFO[searchkey]
+            #some_dict = {key: value for key,value in INFO.items() if key is not searchkey}
+        with open(itemfile, 'w') as f:
+            json.dump(INFO, f)
+        return render_template("item.html", champ=[champion,INFO, num])
+    except:
+        return ("I'm a teapot", 412)
 
 
 @app.route("/stats", methods=['GET', 'POST'])
@@ -256,7 +259,7 @@ if __name__ == '__main__':
 #             itemdata = json.loads(f.read())
 #     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
 #     return render_template('item.html', champ=[champion, itemdatanew])
-
+ 
 
 # @app.route("/delete_champ", methods=['POST', 'GET'])
 # def delete_champ():
