@@ -29,7 +29,16 @@ function add_options_list(type) {
 }
 
 function add_option(type, data) {
-    $(`#autocomplete-options-${type}`).append(`<li>${data}</li>`);
+    var baseurl;
+    var url = `/static/${type}_icons/${data.image}`;
+    $(`#autocomplete-options-${type}`).append(`
+        <li class="autocomplete-option">
+        <div>
+        <span>${data.name}</span>
+        <img src=${url} />
+        </div>
+        </li>
+    `);
 }
 
 function load_autocomplete(type, text) {

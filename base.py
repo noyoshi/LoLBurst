@@ -7,14 +7,18 @@ import time
 def initialize_champs():
     with open("champion.json") as f:
         champdata = json.load(f)
-        champnames = [champdata["data"][thing]["name"] for thing in champdata["data"].keys()]
+        champnames = {}
+        for thing in champdata["data"].keys():
+            champnames[champdata["data"][thing]["name"]] = thing 
 
     return champnames
 
 def initialize_items():
     with open('item.json') as f:
         itemdata = json.load(f)
-        itemnames = [itemdata['data'][item]['name'] for item in itemdata['data']]
+        itemnames = {}
+        for item in itemdata['data']:
+            itemnames[itemdata['data'][item]['name']] = item
 
     return itemnames
 

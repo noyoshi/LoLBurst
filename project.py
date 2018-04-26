@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, url_for, jsonify, request, session
+from flask import Flask, render_template, url_for, jsonify, request, session, Response
 import json
 import os
 import collections
@@ -122,6 +122,15 @@ def edit(num):
     itemdatanew = collections.OrderedDict(sorted(itemdata.items(), key=lambda x: x[1]['gold'], reverse=True))
     return render_template('item.html', champ=[champion, itemdatanew, num])
 
+@app.route("/data/<datatype>", methods=['GET', 'POST'])
+def data(datatype):
+    if datatype == 'champs':
+        return Response(open('champion.json').read(), mimetype='text/json')
+    elif datatype == 'items':
+        return Response(open('item.json').read(), mimetype='text/json')
+    else:
+        return (f'{datatype} data not found...', 402)
+
 @app.route("/backend", methods=['GET'])
 def backend():
     key = request.args.get("key", "")
@@ -143,16 +152,28 @@ def backend():
     if datatype == 'champ':
         if not session.get('champs'):
             session['champs'] = initialize_champs()
-        data = session['champs']
+        info = session['champs']
     elif datatype == "item":
         if not session.get('items'):
             session['items'] = initialize_items()
-        data = session['items']
+        info = session['items']
     else:
         return ("I'm a teapot", 412)
 
-    ds.insert(data)
-    data = ds.search(key)
+    
+    ds.insert(info.keys())
+    elements = ds.search(key)
+
+    data = []
+    for e in elements:
+        if datatype == 'champ':
+            champ = json.load(open('champion.json'))['data'][info[e]]
+            image = champ['image']['full']
+            data.append({'name': e, 'image': image})
+        else:
+            item = json.load(open('item.json'))['data'][info[e]]
+            image = item['image']['full']
+            data.append({'name': e, 'image': image})
     
     return (jsonify(data), 200)
 
