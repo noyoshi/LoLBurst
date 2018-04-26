@@ -129,7 +129,7 @@ def data(datatype):
     elif datatype == 'items':
         return Response(open('item.json').read(), mimetype='text/json')
     else:
-        return ('{} data not found...'.format(datatype), 402)
+        return (f'{datatype} data not found...', 402)
 
 @app.route("/backend", methods=['GET'])
 def backend():
@@ -160,8 +160,8 @@ def backend():
     else:
         return ("I'm a teapot", 412)
 
-
-    ds.insert(info.keys())
+    
+    ds.insert(info)
     elements = ds.search(key)
 
     data = []
@@ -174,7 +174,7 @@ def backend():
             item = json.load(open('item.json'))['data'][info[e]]
             image = item['image']['full']
             data.append({'name': e, 'image': image})
-
+    
     return (jsonify(data), 200)
 
 if __name__ == '__main__':
