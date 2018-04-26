@@ -13,10 +13,13 @@ def stat_json_file(file):
 
 def compile_item_stats(curr_dict):
     stats = {}
+    gold = 0
     for key in curr_dict.keys():
         for key2 in curr_dict[key]["stats"].keys():
             val = curr_dict[key]["stats"][key2]
             stats[key2] = stats.get(key2, 0) + val
+        gold += curr_dict[key]["gold"]
+    stats["gold"] = gold
     return stats
 
 
@@ -53,10 +56,20 @@ def stat_calc(level):
     if champ_stats1:
         champ_stats1["name"] = champ1_dict["id"]
         champ_stats1["image"] = "/static/champ_icons/" + champ1_dict["name"] + ".png"
+
+        if item_stats1:
+            champ_stats1["gold"] = item_stats1["gold"]
+        else:
+            champ_stats1["gold"] = 0
+
     champ_stats2 = combine(item_stats2, champ_stats2,level)
     if champ_stats2:
         champ_stats2["name"] = champ2_dict["id"]
         champ_stats2["image"] = "/static/champ_icons/" + champ2_dict["name"] + ".png"
+        if item_stats2:
+            champ_stats2["gold"] = item_stats2["gold"]
+        else:
+            champ_stats2["gold"] = 0
     return champ_stats1, champ_stats2
 
 def combine(item_stats,champ_stats,level):
