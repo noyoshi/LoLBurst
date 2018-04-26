@@ -117,8 +117,8 @@ class Trie():
         start = time.time()
         currlist = self.root
         for char in data:
-            if char in currlist.keys():
-                currlist = currlist[char]
+            if char.lower() in currlist.keys():
+                currlist = currlist[char.lower()]
             else:
                 end = time.time()
                 print("Search: ", end-start)
