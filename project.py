@@ -100,10 +100,10 @@ def edit(num):
     item = None
     if 'Item' in request.form.keys():
         item = request.form['Item'].strip()
-        if not session.get('items'):
-            session['items'] = initialize_champs()
+        #if not session.get('items'):
+            #session['items'] = initialize_items()
 
-        item = session['items'].get(item, None)
+        #item = session['items'].get(item, None)
     tempItemDict = get_item_icon()
     itemDict = {}
     itemdata = {}
@@ -179,13 +179,15 @@ def backend():
     for e in elements:
         ID = info[e]
         if datatype == 'champ':
-            champ = json.load(open('champion.json'))['data'][ID]
-            image = champ['image']['full']
-            data.append({'name': e, 'image': image, 'id': ID})
+            champ = json.load(open('champion.json'))['data'].get(ID, None)
+            if champ:
+                image = champ['image']['full']
+                data.append({'name': e, 'image': image, 'id': ID})
         else:
-            item = json.load(open('item.json'))['data'][ID]
-            image = item['image']['full']
-            data.append({'name': e, 'image': image, 'id': ID})
+            item = json.load(open('item.json'))['data'].get(ID, None)
+            if item:
+                image = item['image']['full']
+                data.append({'name': e, 'image': image, 'id': ID})
     
     return (jsonify(data), 200)
 
