@@ -30,6 +30,13 @@ parameters
 @[63-72](In sorted list, we sort the list after creating it)
 @[72](Python provides an nlog n sort)
 @[80-88](We stop searching after we stop finding elements in sorted list, as list is sortex lexographically)
+@[97-99](The Trie begins with a root dictionary)
+@[101-113](When inserting, we first check to see if an element is in this dict)
+@[106-107](If it is, then we descend down the list)
+@[108-110](Otherwise, we make a new entry in this level for it, and descend down it)
+@[112](Once we have traversed the whole world, we set the end of word indicator)
+
+
 
 ---?gist=onetapbeyond/494e0fecaf0d6a2aa2acadfb8eb9d6e8&lang=scala&title=Scala GIST
 
