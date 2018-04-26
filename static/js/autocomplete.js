@@ -11,9 +11,7 @@ function add_options_list(type) {
     var id = "autocomplete-options-"+type;
     $input = $("#autocomplete-input-"+type);
     $input.after(`
-    <ul id=${id} class="dropdown-content" tabindex="0"
-        style="display: block; opacity: 1; transform: scaleX(1) scaleY(1); width: 100%; left: 10.5px; top: 43px; height 50px; transform-origin: 0px 0px 0px;">
-    </ul>
+    <ul id=${id} class="autocomplete-dropdown dropdown-content" tabindex="-1"></ul>
     `);
     var backends = {
         'unsorted':'Unsorted List',
@@ -28,17 +26,24 @@ function add_options_list(type) {
     $(`input[name=${radioname}][value='trie']`).prop('checked', true);
 }
 
-function add_option(type, data) {
+function add_option(type, data, key, index) {
     var baseurl;
     var url = `/static/${type}_icons/${data.image}`;
-    $(`#autocomplete-options-${type}`).append(`
-        <li class="autocomplete-option">
-        <div>
-        <span>${data.name}</span>
+    var textstart = data.name.substring(0, key.length);
+    var textend = data.name.substring(key.length);
+    $li = $(`
+        <li class="autocomplete-option" tabindex="0"><div>
+        <strong class="autocomplete-match">${textstart}</strong><span>${textend}</span>
         <img src=${url} />
-        </div>
-        </li>
+        </div></li>
     `);
+    $li.keydown(function(e) {
+        if (e.which == 13) {
+            console.log("Enter on " + $(this).text());
+        }
+    });
+    $(`#autocomplete-options-${type}`).append($li);
+
 }
 
 function load_autocomplete(type, text) {
@@ -47,14 +52,13 @@ function load_autocomplete(type, text) {
         console.log("Inputting "+type+": " + text + "...");
         console.log(result);
         $(`#autocomplete-options-${type}`).empty();
-        $.each(result, function(k, v) {
-            add_option(type, v);
+        $.each(result, function(i, v) {
+            add_option(type, v, text, i + 2);
         })
     });
 }
 
 $(document).ready(function() {
-
     var types = ["champ", "item"];
     $.each(types, function(key, type) {
         console.log(type);
@@ -64,8 +68,10 @@ $(document).ready(function() {
             load_autocomplete(type, text);
         });
 
-        $(`#autocomplete-input-${type}`).focusout(function(e) {
-            $(`#autocomplete-options-${type}`).empty();
+        $(`#${type}search`).focusout(function(e) {
+            if (!this.contains(e.relatedTarget)) {
+                $(`#autocomplete-options-${type}`).empty();
+            }
         });
 
         $(`#autocomplete-input-${type}`).focus(function(e) {
@@ -73,8 +79,8 @@ $(document).ready(function() {
             console.log(text);
             load_autocomplete(type, text);
         });
-    });
 
+    });
 });
 
 /*
