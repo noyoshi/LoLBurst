@@ -9,10 +9,13 @@ version = "8.8.1"
 CURR_DIR = os.getcwd()
 
 # Need to get this data from website
-API_KEY = "RGAPI-54f45bbd-2fd7-443d-940d-00f860eb5378"
-URL = "https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&version={}&champListData=all&tags=all&dataById=false&api_key={}".format(version,API_KEY)
-if API_KEY and not os.path.isfile(CURR_DIR +"/champ_info.json"):
-    os.popen("wget {} -O champ_info.json".format(URL))
+#API_KEY = "RGAPI-54f45bbd-2fd7-443d-940d-00f860eb5378"
+#URL = "https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&version={}&champListData=all&tags=all&dataById=false&api_key={}".format(version,API_KEY)
+#if API_KEY and not os.path.isfile(CURR_DIR +"/champ_info.json"):
+#    os.popen("wget {} -O champ_info.json".format(URL))
+
+if not os.path.isfile(CURR_DIR + "/champ_info.json"):
+    os.popen("unzip {} - O champ_info.zip")
 
 # Gets json files
 if not os.path.isfile(CURR_DIR + "/champion.json"):
