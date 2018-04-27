@@ -7,9 +7,10 @@ use_temp () {
     echo ""
 }
 
-
+rm temp_r &> /dev/null
+rm temp_f.txt &> /dev/null
 chmod +x benchmark.py
-make 
+make &> /dev/null 
 
 echo 'Testing search time'
 echo ""
@@ -25,6 +26,10 @@ use_temp
 echo "ka"
 cat temp_f.txt | ./measure ./benchmark.py -s "ka" > temp_r 
 use_temp
+echo "z"
+cat temp_f.txt | ./measure ./benchmark.py -s "z" > temp_r
+use_temp
+
 
 echo 'Testing unsorted'
 echo "================"
@@ -34,6 +39,9 @@ use_temp
 echo "ka"
 cat temp_f.txt | ./measure ./benchmark.py -u "ka" > temp_r
 use_temp
+echo "z"
+cat temp_f.txt | ./measure ./benchmark.py -u "z" > temp_r
+use_temp
 
 echo "Testing trie"
 echo "============"
@@ -42,6 +50,9 @@ cat temp_f.txt | ./measure ./benchmark.py -t "a" > temp_r
 use_temp
 echo "ka"
 cat temp_f.txt | ./measure ./benchmark.py -t "ka" > temp_r
+use_temp
+echo "z"
+cat temp_f.txt | ./measure ./benchmark.py -t "z" > temp_r
 use_temp
 
 rm temp_f.txt
