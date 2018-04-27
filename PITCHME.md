@@ -26,7 +26,7 @@ parameters
 @[52-60](We simply add to a list for UnsortedList)
 @[63-72](In sorted list, we sort the list after creating it)
 @[72](Python provides an nlog n sort)
-@[75-95](Search is optimized for sorted list as well)
+@[75-88](Search is optimized for sorted list as well)
 @[80-88](We stop searching after we stop finding elements in sorted list, as list is sortex lexographically)
 @[97-99](The Trie begins with a root dictionary)
 @[101-113](When inserting, we first check to see if an element is in this dict)
