@@ -9,7 +9,7 @@ document.write('\
 </ul>\
 <nav>\
     <div class="nav-wrapper">\
-        <a href="/" class="brand-logo">LOLStats - Data Structures Final Project</a>\
+        <a href="/" class="brand-logo" style="padding-left: 10px;">LOLStats - Data Structures Final Project</a>\
         <ul class="right hide-on-med-and-down">\
             <!-- Dropdown Trigger -->\
             <li><a class="dropdown-trigger" href="/edit/1" data-target="dropdown1">Champion and Itemization<i class="material-icons right">arrow_drop_down</i></a></li>\
