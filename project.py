@@ -56,6 +56,12 @@ def delete(num):
 @app.route("/stats", methods=['GET', 'POST'])
 def stats():
     champion1_stats, champion2_stats = stat_calc(18)
+    
+    if champion1_stats and "magicdamage" not in champion1_stats: 
+        champion1_stats["magicdamage"] = 0  
+    if champion2_stats and "magicdamage" not in champion2_stats: 
+        champion2_stats["magicdamage"] = 0
+
     return render_template("stats.html", stats=[champion1_stats, champion2_stats])
 
 @app.route("/info", methods=['GET', 'POST'])
