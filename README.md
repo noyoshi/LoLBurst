@@ -5,12 +5,11 @@ Status](https://travis-ci.org/noyoshi/LoLBurst.svg?branch=master)](https://travi
 
 ## Benchmarking 
 
-`$ chmod +x testme.sh`
-
-`$ ./testme.sh`
+- `$ chmod +x testme.sh`
+- `$ ./testme.sh`
 
 Tests against data that we already validated using `grep -E "^PREFIX.*" | sort` 
-and stored in output files to determine that each backends works properly. 
+and stored in output files to determine that each backend works properly. 
 
 Uses `measure` program to determine memory usage. 
 
@@ -19,12 +18,12 @@ backend.
 
 ## Installing 
 
-Dependencies: Python 3, pip
+Dependencies: Python 3, pip, Bash, gcc
 
-- `$ pip3 install -r requirements.txt`
-- `$ chmod +x download.py`
-- `$ ./download.py`
-- `$ chmod +x testme.sh`
+- `$ chmod +x download.sh`
+- `$ ./download.sh`
+- This will install all requirements for python, and dowload the necessary asset 
+files from the API
 
 ### Running the server
 
