@@ -7,6 +7,9 @@ use_temp () {
     echo ""
 }
 
+chmod +x test_project.py
+echo "Running unit tests"
+./test_project.py
 rm temp_r &> /dev/null
 rm temp_f.txt &> /dev/null
 chmod +x benchmark.py
