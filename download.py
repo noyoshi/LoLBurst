@@ -15,7 +15,7 @@ CURR_DIR = os.getcwd()
 #    os.popen("wget {} -O champ_info.json".format(URL))
 
 if not os.path.isfile(CURR_DIR + "/champ_info.json"):
-    os.popen("unzip {} - O champ_info.zip")
+    os.popen("unzip champ_info.zip")
 
 # Gets json files
 if not os.path.isfile(CURR_DIR + "/champion.json"):
