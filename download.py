@@ -14,9 +14,6 @@ CURR_DIR = os.getcwd()
 #if API_KEY and not os.path.isfile(CURR_DIR +"/champ_info.json"):
 #    os.popen("wget {} -O champ_info.json".format(URL))
 
-if not os.path.isfile(CURR_DIR + "/champ_info.json"):
-    os.popen("unzip champ_info.zip")
-
 # Gets json files
 if not os.path.isfile(CURR_DIR + "/champion.json"):
     os.popen("wget https://ddragon.leagueoflegends.com/cdn/{}/data/en_US/champion.json".format(version))
