@@ -4,7 +4,6 @@
 Status](https://travis-ci.org/noyoshi/LoLBurst.svg?branch=master)](https://travis-ci.org/noyoshi/LoLBurst)
 
 ## Benchmarking 
----
 
 `$ chmod +x testme.sh`
 
@@ -19,7 +18,6 @@ Uses Python's `time` module to determine search / insertion time for each
 backend. 
 
 ## Installing 
----
 
 Dependencies: Python 3, pip
 
@@ -27,4 +25,12 @@ Dependencies: Python 3, pip
 - `$ chmod +x download.py`
 - `$ ./download.py`
 - `$ chmod +x testme.sh`
+
+### Running the server
+
 - `$ FLASK_APP=project.py flask run -h [IPADDRESS]`
+
+### Using backends for prefix search
+
+- `$ chmod +x benchmark.py`
+- `$ cat INPUT_FILE | ./benchmark.py -[ust] "PREFIX"`
