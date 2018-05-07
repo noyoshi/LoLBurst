@@ -21,6 +21,10 @@ backend.
 ## Installing 
 ---
 
+Dependencies: Python 3, pip
+
 - `$ pip3 install -r requirements.txt`
+- `$ chmod +x download.py`
+- `$ ./download.py`
 - `$ chmod +x testme.sh`
 - `$ FLASK_APP=project.py flask run -h [IPADDRESS]`
