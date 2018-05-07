@@ -29,6 +29,9 @@ use_temp
 echo "z"
 cat temp_f.txt | ./measure ./benchmark.py -s "z" > temp_r
 use_temp
+echo "man"
+cat temp_f.txt | ./measure ./benchmark.py -s "man" > temp_r 
+use_temp
 
 
 echo 'Testing unsorted'
@@ -42,6 +45,9 @@ use_temp
 echo "z"
 cat temp_f.txt | ./measure ./benchmark.py -u "z" > temp_r
 use_temp
+echo "man"
+cat temp_f.txt | ./measure ./benchmark.py -u "man" > temp_r 
+use_temp
 
 echo "Testing trie"
 echo "============"
@@ -53,6 +59,9 @@ cat temp_f.txt | ./measure ./benchmark.py -t "ka" > temp_r
 use_temp
 echo "z"
 cat temp_f.txt | ./measure ./benchmark.py -t "z" > temp_r
+use_temp
+echo "man"
+cat temp_f.txt | ./measure ./benchmark.py -t "man" > temp_r 
 use_temp
 
 rm temp_f.txt

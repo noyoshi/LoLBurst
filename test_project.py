@@ -25,13 +25,6 @@ class ProjectTestCase(TestCase):
         rv = self.app.get('/')
         self.assert_template_used('item.html')
 
-    # Why the fuck does this not work
-    '''
-    def test_backend(self):
-        resp = self.client.get('/backend')
-        self.assertEquals(resp.json, jsonify({"Please":"Work", "Derp": "SOWWY"}))
-    '''
-
     def test_info_html(self):
         rv = self.app.get('/info')
         self.assert_template_used('info.html')
