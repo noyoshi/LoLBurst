@@ -36,7 +36,32 @@ files from the API
 - `$ chmod +x benchmark.py`
 - `$ cat INPUT_FILE | ./benchmark.py -[ust] "PREFIX"`
 
-### Contribution Breakdown 
+## Overview 
+
+- `project.py` is the flask application used to manage the server and handle
+recieving and sending data to and from the front end
+- `base.py` contains the backend implementatins for the auto complete / prefix
+  searching
+- `download.py` and `download.sh` are used to download assets from the Riot Games API and League of
+Legends asset API
+- `helpers.py` and `item_helper.py` handle API calls and create, manage, and
+  parse JSON files (where we store and cache data)
+- `measure.c` is the provided measure program to determine memory usage 
+- `benchmark.py` is a script to run the backends independently and check for
+  time and accuracy 
+- `test_project.py` uses the unit testing libraries for Python and Flask to
+  create and check accuracy of function calls within the `project.py` file 
+- `testme.sh` is the script we run to test the program 
+- `tests/` is the folder that contains the outputs for various tests done in
+  `test_project.py`
+- `templates/` is the folder for flask containing the HTML templates 
+- `static/` contain static files for the front end, such as javascript and css
+  files, and any downloaded image files 
+- `*.json` are all json files containing Riot API static data (cached locally as
+  we are limited to 10 calls per hour for this data)
+
+
+## Contribution Breakdown 
 
 ##### Timothy Blazek
 
