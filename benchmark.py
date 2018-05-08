@@ -4,8 +4,9 @@ import sys
 from base import * 
 
 def bench(obj, key):
-    s_in = [x.strip() for x in sys.stdin] 
-    
+
+    s_in = [x.strip() for x in sys.stdin]
+
     obj.insert(s_in)
 
     for x in obj.search(key): 
