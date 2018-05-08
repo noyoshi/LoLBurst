@@ -20,6 +20,8 @@ backend.
 
 Dependencies: Python 3, pip, Bash, gcc
 
+- `$ git clone https://github.com/noyoshi/LoLBurst`
+- `$ cd LoLBurst`
 - `$ chmod +x download.sh`
 - `$ ./download.sh`
 - This will install all requirements for python, and dowload the necessary asset 
