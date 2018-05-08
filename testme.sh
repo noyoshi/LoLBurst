@@ -11,60 +11,58 @@ chmod +x test_project.py
 echo "Running unit tests"
 ./test_project.py
 rm temp_r &> /dev/null
-rm temp_f.txt &> /dev/null
+rm test_d.txt &> /dev/null
 chmod +x benchmark.py
 make &> /dev/null 
+unzip td.zip
 
 echo 'Testing search time'
 echo ""
 echo 'Testing sorted'
 echo ""
 echo "=============="
-cat /usr/share/dict/american-english >> temp_f.txt
-cat /usr/share/dict/catala >> temp_f.txt
-cat /usr/share/dict/danish >> temp_f.txt
 echo "a"
-cat temp_f.txt | ./measure ./benchmark.py -s "a" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -s "a" > temp_r
 use_temp
 echo "ka"
-cat temp_f.txt | ./measure ./benchmark.py -s "ka" > temp_r 
+cat test_d.txt | ./measure ./benchmark.py -s "ka" > temp_r 
 use_temp
 echo "z"
-cat temp_f.txt | ./measure ./benchmark.py -s "z" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -s "z" > temp_r
 use_temp
 echo "man"
-cat temp_f.txt | ./measure ./benchmark.py -s "man" > temp_r 
+cat test_d.txt | ./measure ./benchmark.py -s "man" > temp_r 
 use_temp
 
 
 echo 'Testing unsorted'
 echo "================"
 echo "a"
-cat temp_f.txt | ./measure ./benchmark.py -u "a" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -u "a" > temp_r
 use_temp
 echo "ka"
-cat temp_f.txt | ./measure ./benchmark.py -u "ka" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -u "ka" > temp_r
 use_temp
 echo "z"
-cat temp_f.txt | ./measure ./benchmark.py -u "z" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -u "z" > temp_r
 use_temp
 echo "man"
-cat temp_f.txt | ./measure ./benchmark.py -u "man" > temp_r 
+cat test_d.txt | ./measure ./benchmark.py -u "man" > temp_r 
 use_temp
 
 echo "Testing trie"
 echo "============"
 echo "a"
-cat temp_f.txt | ./measure ./benchmark.py -t "a" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -t "a" > temp_r
 use_temp
 echo "ka"
-cat temp_f.txt | ./measure ./benchmark.py -t "ka" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -t "ka" > temp_r
 use_temp
 echo "z"
-cat temp_f.txt | ./measure ./benchmark.py -t "z" > temp_r
+cat test_d.txt | ./measure ./benchmark.py -t "z" > temp_r
 use_temp
 echo "man"
-cat temp_f.txt | ./measure ./benchmark.py -t "man" > temp_r 
+cat test_d.txt | ./measure ./benchmark.py -t "man" > temp_r 
 use_temp
 
-rm temp_f.txt
+rm test_d.txt
